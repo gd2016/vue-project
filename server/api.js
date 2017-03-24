@@ -1,7 +1,9 @@
 var express=require('express');
 var router=express.Router();
 
-
+router.get('/',function(req,res,next){
+    res.sendFile('/dist/index.html')
+})
 
 router.get('/api/index',function(req,res,next){
     res.send({content:"主页"})
