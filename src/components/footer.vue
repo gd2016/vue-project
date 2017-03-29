@@ -1,43 +1,53 @@
 <template>
-    <footer>
-        <mt-tabbar>
-            <mt-tab-item>
-                <router-link to="/index">
-                        主页
-                </router-link>
-            </mt-tab-item>
-            <mt-tab-item>
-                <router-link to="/settingPage">
-                        设置
-                </router-link>
-            </mt-tab-item>
-            <mt-tab-item>
-                <router-link to="/friends">
-                        朋友圈
-                </router-link>
-            </mt-tab-item>
-            <mt-tab-item>
-                <router-link to="/personal">
-                        个人中心
-                </router-link>
-            </mt-tab-item>
-        </mt-tabbar>
+    <footer class="footerContainer">
+        <ul class="clear footul">
+            <router-link :to="{path: '/index'}" tag="li" class="liborder footli left">
+                 <span class="footicon iconfont icon-shouye-shouye"></span>
+                <span class="footfont">首页</span>
+            </router-link>
+            <router-link :to="{path: '/mchntCenter'}" tag="li" class="footli left">   
+                <span class="footicon iconfont icon-shanghu"></span>
+                <span class="footfont">商户中心</span>
+            </router-link>
+        </ul>
     </footer>
 </template>
 
 <script>
-import Vue from 'vue'
-import {Tabbar,TabItem} from 'mint-ui'
-Vue.component(Tabbar.name,Tabbar)
-Vue.component(TabItem.name,TabItem)
 export default {
   
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.router-link-active{
-    color:red
-}
+<style scoped lang="scss">
+@import '../style/mixin.scss';
+    .footerContainer{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 1.45rem;
+        line-height: 1.45rem;
+        .footul{
+            width:100%;
+            border-top: solid 1px $lineColor;
+            background: white;
+            height: 100%;
+            .liborder{
+                border-right: solid 1px $lineColor;
+            }
+        }
+        .footli{
+            width: 50%;
+            text-align: center;
+            height: 100%;
+            .footicon{
+                 @include sc(0.4rem,$bgColor);
+                 padding-top: 0.05rem;
+                 display: inline-block;
+            }
+            .footfont{
+                @include sc(0.4rem,$bgColor);
+            }
+        }
+    }
 </style>

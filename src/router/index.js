@@ -1,9 +1,11 @@
-import App from '../App'
-
-const index = r =>require.ensure([],()=>r(require('../page/index/index')),'index')
-const personal = r =>require.ensure([],()=>r(require('../page/personal/personal')),'personal')
-const friends = r =>require.ensure([],()=>r(require('../page/friends/friends')),'friends')
-const settings = r =>require.ensure([],()=>r(require('../page/settings/settings')),'settings')
+const findpwd = r =>require.ensure([],()=>r(require('../page/findpwd')),'findpwd')
+const register = r =>require.ensure([],()=>r(require('../page/register')),'register')
+const login = r =>require.ensure([],()=>r(require('../page/login')),'login')
+const index = r =>require.ensure([],()=>r(require('../page/index')),'index')
+const business = r =>require.ensure([],()=>r(require('../page/business/business')),'business')
+const mchntCenter = r =>require.ensure([],()=>r(require('../page/mchntCenter/mchntCenter')),'mchntCenter')
+const flow = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/flow')),'flow')
+const count = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/count')),'count')
 export default [
     {
       path:'',
@@ -12,13 +14,26 @@ export default [
       path:'/index',
       component:index
     },{
-      path:'/settingPage',
-      component:settings
+      path:'/login',
+      component:login
     },{
-      path:'/friends',
-      component:friends
+      path:'/register',
+      component:register
     },{
-      path:'/personal',
-      component:personal
+      path:'/findpwd',
+      component:findpwd
+    },{
+      path:'/business',
+      component:business
+    },{
+      path:'/mchntCenter',
+      component:mchntCenter,
+      children:[{
+        path:'flow',
+        component:flow,
+      },{
+        path:'count',
+        component:count,
+      }]
     }
 ]
