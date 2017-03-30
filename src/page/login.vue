@@ -52,6 +52,9 @@
 </script>
 <style scoped lang="scss">
     @import '../style/mixin.scss';
+    .loginPage{
+        padding-top: 1.6rem;
+    }
     .content{
         width: 7.6rem;
         margin: 0 auto;

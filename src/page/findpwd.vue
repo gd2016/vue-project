@@ -31,6 +31,9 @@
 
 <style scoped lang="scss">
     @import '../style/mixin.scss';
+    .findPwdPage{
+        padding-top: 1.6rem;
+    }
     .getyzm{
         background: #f2d9d6;
         color:$bgColor;

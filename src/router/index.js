@@ -6,6 +6,7 @@ const business = r =>require.ensure([],()=>r(require('../page/business/business'
 const mchntCenter = r =>require.ensure([],()=>r(require('../page/mchntCenter/mchntCenter')),'mchntCenter')
 const flow = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/flow')),'flow')
 const count = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/count')),'count')
+const mchntVip = r =>require.ensure([],()=>r(require('../page/mchntVip/mchntVip')),'mchntVip')
 export default [
     {
       path:'',
@@ -35,5 +36,8 @@ export default [
         path:'count',
         component:count,
       }]
+    },{
+      path:'/mchntVip',
+      component:mchntVip
     }
 ]

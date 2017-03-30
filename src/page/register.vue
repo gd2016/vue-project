@@ -30,6 +30,9 @@
 
 <style scoped lang="scss">
     @import '../style/mixin.scss';
+    .registerPage{
+        padding-top: 1.6rem;
+    }
     .regBtn{
         padding: 0 1.3rem;
     }

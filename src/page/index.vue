@@ -15,7 +15,7 @@
                         <img src="../images/btn_menu_icon02.png"/>
                         <p>便民业务</p>
                     </router-link>
-                    <router-link :to="{path: '/business'}" tag="li">
+                    <router-link :to="{path: '/mchntVip'}" tag="li">
                         <img src="../images/btn_menu_icon03.png"/>
                         <p>会员管理</p>
                     </router-link>
@@ -46,6 +46,9 @@
 </script>
 <style scoped lang="scss">
  @import '../style/mixin.scss';
+ .indexPage{
+     padding-bottom: 1.6rem;
+ }
     .container{
         padding-bottom: 1.6rem;
     }

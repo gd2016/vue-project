@@ -1,11 +1,11 @@
 <template>
     <footer class="footerContainer">
         <ul class="clear footul">
-            <router-link :to="{path: '/index'}" tag="li" class="liborder footli left">
+            <router-link :to="{path: '/index'}" tag="li" class="liborder footli left" :class="$route.path.indexOf('index')!==-1?'active':''">
                  <span class="footicon iconfont icon-shouye-shouye"></span>
                 <span class="footfont">首页</span>
             </router-link>
-            <router-link :to="{path: '/mchntCenter'}" tag="li" class="footli left">   
+            <router-link :class="$route.path.indexOf('mchntCenter')!==-1?'active':''" :to="{path: '/mchntCenter'}" tag="li" class="footli left">   
                 <span class="footicon iconfont icon-shanghu"></span>
                 <span class="footfont">商户中心</span>
             </router-link>
@@ -34,6 +34,9 @@ export default {
             height: 100%;
             .liborder{
                 border-right: solid 1px $lineColor;
+            }
+            .active{
+                background: #f2d9d6;
             }
         }
         .footli{

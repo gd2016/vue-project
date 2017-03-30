@@ -49,6 +49,9 @@
 </script>
 <style scoped lang="scss">
 @import '../../style/mixin.scss';
+.businessPage{
+    padding-top: 1.6rem;
+}
     .businessNav{
         padding: 0.3rem 0 0 0;
         li{

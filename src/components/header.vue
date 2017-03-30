@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header class="header">
         <div class="header-container clear">
             <span v-if="goback" @click="$router.go(-1)" class="back iconfont icon-houtui"></span>
             <span class="title">{{headtitle}}</span>
@@ -14,6 +14,12 @@
 </script>
 <style lang="scss" scoped>
 @import '../style/mixin.scss';
+.header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
     .header-container{
         height: 1.6rem;
         background: #e52e04;

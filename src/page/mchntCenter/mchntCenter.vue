@@ -53,6 +53,9 @@
 </script>
 <style scoped lang="scss">
     @import '../../style/mixin.scss';
+    .mchntCenterPage{
+        padding-top: 1.6rem;
+    }
     .content{
         padding-bottom: 1.6rem;
     }
@@ -105,7 +108,6 @@
             padding: 0.30rem 0 0.15rem 1.15rem;
             font-size: 0.38rem;
             p{
-                height: 0.76rem;
                 line-height: 0.76rem;   
                 span{
                     color:$lineColor;
