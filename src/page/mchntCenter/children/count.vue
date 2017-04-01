@@ -73,7 +73,7 @@
 <style scoped lang="scss">
     @import '../../../style/mixin.scss';
     .mchntCountPage{
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         right: 0;
@@ -81,7 +81,7 @@
         z-index: 4;
         background: $pageBg;
         padding-top: 1.6rem;
-        overflow: auto;
+        // overflow: auto;
     }
     .datemodule{
         padding: 0.3rem 0;

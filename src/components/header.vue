@@ -3,7 +3,8 @@
         <div class="header-container clear">
             <span v-if="goback" @click="$router.go(-1)" class="back iconfont icon-houtui"></span>
             <span class="title">{{headtitle}}</span>
-            <span v-if="right" class="more iconfont icon-ordinaryset"></span>
+            <router-link v-if="right"  :to="{path: '/settings'}" tag="span" class="more iconfont icon-ordinaryset">
+            </router-link>
         </div> 
     </header>
 </template>

@@ -7,6 +7,8 @@ const mchntCenter = r =>require.ensure([],()=>r(require('../page/mchntCenter/mch
 const flow = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/flow')),'flow')
 const count = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/count')),'count')
 const mchntVip = r =>require.ensure([],()=>r(require('../page/mchntVip/mchntVip')),'mchntVip')
+const settings = r =>require.ensure([],()=>r(require('../page/settings/settings')),'settings')
+const changePwd = r =>require.ensure([],()=>r(require('../page/settings/children/changePwd')),'changePwd')
 export default [
     {
       path:'',
@@ -39,5 +41,12 @@ export default [
     },{
       path:'/mchntVip',
       component:mchntVip
+    },{
+      path:'/settings',
+      component:settings,
+      children:[{
+        path:'changePwd',
+        component:changePwd,
+      }]
     }
 ]

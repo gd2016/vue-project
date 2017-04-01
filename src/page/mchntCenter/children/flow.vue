@@ -179,14 +179,14 @@
         padding-top: 1.6rem;
     }
     .mchntFlowPage{
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
         z-index: 4;
         background: $pageBg;
-        overflow: auto;
+        // overflow: auto;
     }
     .tab{
         height: 1.45rem;

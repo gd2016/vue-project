@@ -1,6 +1,6 @@
 <template>
     <div class="loginPage">
-        <header-top headtitle="用户登陆" goback="true"></header-top>
+        <header-top headtitle="用户登陆" ></header-top>
         <div class="content">
             <section class="imgBox">
                 <div class="img"></div>
@@ -8,15 +8,15 @@
             <section class="inputBox">
                 <div class="userName">
                     <span class="iconname iconfont icon-yonghuming"></span>
-                    <input type="text" placeholder="请输入商户号或手机号" />
+                    <input type="text" placeholder="请输入商户号或手机号" v-model="mobileNo" />
                 </div>
                 <div class="userPwd">
                     <span class="iconpwd iconfont icon-mima"></span>
-                    <input type="text" placeholder="请输入密码" />
+                    <input type="text" placeholder="请输入密码"  v-model="loginPwd" />
                 </div>
             </section>
             <section class="login">
-                <mt-button class="loginBtn" size="large" type="danger">登录</mt-button>
+                <mt-button class="loginBtn" @click="login()" size="large" type="danger">登录</mt-button>
             </section>
             <section class="remember clear">
                 <div class="left">
@@ -37,12 +37,68 @@
 <script>
     import Vue from 'vue'
     import headerTop from '../components/header'
-    import { Button } from 'mint-ui';
-    Vue.component(Button.name, Button);
-    export default{
+    import { Button,Toast } from 'mint-ui'
+    import axios from 'axios'
+    import {getStore, setStore,setCookie,getCookie,removeCookie,setparams} from '@/config/utils'
+    Vue.component(Button.name, Button)
+    Vue.component(Toast.name, Toast)
+    export default {
         data(){
-            return {
-                remember:false
+            return{
+                remember:false,
+                mobileNo:'',
+                loginPwd:''
+            }
+        },
+        created:function(){
+            if(getCookie('username')){
+                this.mobileNo=getCookie('username')
+            }
+        },
+        methods:{
+            login:function(){
+                if(this.mobileNo==""){
+                    Toast({
+                        message: '请输入用户名或商户号',
+                        position: 'bottom',
+                        duration: 1500
+                    });
+                    return
+                }
+                if(this.loginPwd==""){
+                    Toast({
+                        message: '请输入密码',
+                        position: 'bottom',
+                        duration: 1500
+                    });
+                    return 
+                }
+                var params=setparams({
+                    mobileNo:this.mobileNo,
+                    loginPwd:this.loginPwd,
+                })
+                // var params=new URLSearchParams();
+                // params.append('json', '{data:{mobileNo:'+this.mobileNo+',loginPwd:'+this.loginPwd+'}}');
+                axios ({
+                    method:'post',
+                    data:params,
+                    url:'/mss/api/loginByMobile.do'
+                })
+                .then((response) => {
+                    if(response.data.returnCode!=="1"){
+                        Toast({
+                            message: response.data.errMessage,
+                            position: 'bottom',
+                            duration: 1000
+                        });
+                    }else{
+                        if(this.remember){
+                            setCookie('username',this.mobileNo,5)
+                        }
+                        setStore('sessionId',response.data.data.sessionId)
+                        this.$router.push({path:'index'})
+                    }
+                })
             }
         },
         components:{
@@ -61,7 +117,7 @@
         .imgBox{
             .img{
                 margin: 1.15rem auto;
-                @include wh(3.2rem,2.7rem)
+                @include wh(3.2rem,2.7rem);
                 @include bg('../images/login_logo_top.png')
             }
         }
@@ -114,5 +170,6 @@
             }
         }
     }
+    
 </style>
 

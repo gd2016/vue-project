@@ -24,6 +24,9 @@ export default {
       }
       .mint-cell-value{
         padding-right: 1rem;
+        .mint-field-core{
+          height: 1rem;
+        }
       }
     }
     .mint-cell-text{
@@ -39,5 +42,11 @@ export default {
         padding-right: 3.5rem;
       }
     }
+  }
+  .mint-toast{
+    background: $bgColor !important;
+      .mint-toast-text{
+          color:white;
+      }
   }
 </style>

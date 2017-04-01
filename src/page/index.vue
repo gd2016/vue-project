@@ -1,9 +1,13 @@
 <template>
     <div class="indexPage">
         <div class="container">
-            <header-top headtitle="徽信宝"></header-top>
+            <header-top headtitle="徽信宝" right="true"></header-top>
             <div class="swiper">
-
+                <mt-swipe :auto="4000">
+                    <mt-swipe-item v-for="(item,index) in swiperImg" :key="index">
+                        <img :src="'data:image/png;base64,'+item.adAddress"/>
+                    </mt-swipe-item>
+                </mt-swipe>
             </div>
             <div class="navListContainer">
                 <ul class="clear navList">
@@ -27,6 +31,10 @@
                         <img src="../images/btn_menu_icon05.png"/>
                         <p>更多功能</p>
                     </router-link>
+                    <li @click="tojava()">
+                        <img src="../images/btn_menu_icon05.png"/>
+                        <p>调java</p>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -37,23 +45,63 @@
     import Vue from 'vue'
     import headerTop from '../components/header'
     import footerBottom from '../components/footer'
-    export default{
+    import {getStore,setparams,errorhandle} from '@/config/utils'
+    import axios from 'axios'
+    import { Swipe, SwipeItem } from 'mint-ui';
+    Vue.component(Swipe.name, Swipe);
+    Vue.component(SwipeItem.name, SwipeItem);
+    export default {
+        data(){
+            return{
+                swiperImg:''
+            }
+        },
+        
         components:{
             headerTop,
             footerBottom    
+        },
+        methods:{
+            tojava:function(){
+                var toAndroidData = "java:command:htmlDismissDialog";   
+                window.toAndroid.jsToAndroid(toAndroidData);
+            }
+        },
+        created:function() {
+            if(!getStore('sessionId')){
+                this.$router.push({path:'login'})
+            }
+            var params=setparams({})
+            // var params=new URLSearchParams();
+            // params.append('json', '{data:{mobileNo:'+this.mobileNo+',loginPwd:'+this.loginPwd+'}}');
+            axios ({
+                method:'post',
+                data:params,
+                url:'/mss/api/getBankAd.do'
+            })
+            .then((response) => {
+                if(errorhandle(response,this)){
+                    this.swiperImg=response.data.data;
+                    console.log(response.data)
+                }
+            })
         }
     }
 </script>
 <style scoped lang="scss">
  @import '../style/mixin.scss';
  .indexPage{
-     padding-bottom: 1.6rem;
+     padding-top: 1.6rem;
+     padding-bottom: 2rem;
  }
     .container{
-        padding-bottom: 1.6rem;
+        
     }
     .swiper{
         height: 5.8rem;
+        img{
+            @include wh(100%,100%)
+        }
     }
     .navList{
         padding: 0.65rem 0 0 0.5rem;
