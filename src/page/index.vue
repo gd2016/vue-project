@@ -47,7 +47,7 @@
     import footerBottom from '../components/footer'
     import {getStore,setparams,errorhandle} from '@/config/utils'
     import axios from 'axios'
-    import { Swipe, SwipeItem } from 'mint-ui';
+    import { Swipe, SwipeItem,Indicator} from 'mint-ui';
     Vue.component(Swipe.name, Swipe);
     Vue.component(SwipeItem.name, SwipeItem);
     export default {
@@ -56,35 +56,55 @@
                 swiperImg:''
             }
         },
-        
+        beforeRouteEnter (to, from, next) {
+            if(from.path=="/login"){//第一次登陆的时候，防止等待广告信息
+                var params=setparams({})
+                axios ({
+                    method:'post',
+                    data:params,
+                    url:'/mss/api/getBankAd.do'
+                })
+                .then((response) => {
+                    next(vm => {
+                        Indicator.close();
+                        if(errorhandle(response,vm)){
+                            vm.swiperImg=response.data.data;
+                        }
+                    })
+                })
+            }else{
+                next()
+            }
+        },
         components:{
             headerTop,
             footerBottom    
         },
         methods:{
             tojava:function(){
-                var toAndroidData = "java:command:htmlDismissDialog";   
-                window.toAndroid.jsToAndroid(toAndroidData);
+                 
+               Indicator.open();
             }
         },
         created:function() {
             if(!getStore('sessionId')){
                 this.$router.push({path:'login'})
             }
-            var params=setparams({})
-            // var params=new URLSearchParams();
-            // params.append('json', '{data:{mobileNo:'+this.mobileNo+',loginPwd:'+this.loginPwd+'}}');
-            axios ({
-                method:'post',
-                data:params,
-                url:'/mss/api/getBankAd.do'
-            })
-            .then((response) => {
-                if(errorhandle(response,this)){
-                    this.swiperImg=response.data.data;
-                    console.log(response.data)
-                }
-            })
+            if(!this.siperImg){//防止刷新页面后广告丢失
+                Indicator.open('正在加载广告...');
+                var params=setparams({})
+                axios ({
+                    method:'post',
+                    data:params,
+                    url:'/mss/api/getBankAd.do'
+                })
+                .then((response) => {
+                        Indicator.close();
+                        if(errorhandle(response,this)){
+                            this.swiperImg=response.data.data;
+                        }
+                })
+            }
         }
     }
 </script>

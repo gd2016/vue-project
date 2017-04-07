@@ -11,46 +11,28 @@
             <div class="detailCount">
                 <ul class="listBox">
                     <li class="countList">
-                        总销售：<span class="value">15000元</span>
+                        总销售：<span class="value">{{actualAmount}}</span>
                     </li>
                     <li class="countList">
-                        销售总笔数：<span class="value">15000元</span>
+                        销售总笔数：<span class="value">{{transNumber}}</span>
                     </li>
                     <li class="countList">
-                        本行卡消费金额：<span class="value">15000元</span>
+                        本行卡消费金额：<span class="value">{{bcAmount}}</span>
                     </li>
                     <li class="countList">
-                        它行卡消费金额：<span class="value">15000元</span>
+                        它行卡消费金额：<span class="value">{{obcAmount}}</span>
                     </li>
                     <li class="countList">
-                        借记卡消费金额：<span class="value">15000元</span>
+                        借记卡消费金额：<span class="value">{{debitAmount}}</span>
                     </li>
                     <li class="countList">
-                        贷记卡消费金额：<span class="value">15000元</span>
+                        贷记卡消费金额：<span class="value">{{crebitAmount}}</span>
                     </li>
                     <li class="countList">
-                        活动补贴金额：<span class="value">15000元</span>
+                        活动补贴金额：<span class="value">{{activityAmount}}</span>
                     </li>
                     <li class="countList">
-                        手续费汇总金额：<span class="value">15000元</span>
-                    </li>
-                    <li class="countList">
-                        贷记卡消费金额：<span class="value">15000元</span>
-                    </li>
-                    <li class="countList">
-                        活动补贴金额：<span class="value">15000元</span>
-                    </li>
-                    <li class="countList">
-                        手续费汇总金额：<span class="value">15000元</span>
-                    </li>
-                    <li class="countList">
-                        贷记卡消费金额：<span class="value">15000元</span>
-                    </li>
-                    <li class="countList">
-                        活动补贴金额：<span class="value">15000元</span>
-                    </li>
-                    <li class="countList">
-                        手续费汇总金额：<span class="value">15000元</span>
+                        手续费汇总金额：<span class="value">{{handlingChargeCount}}</span>
                     </li>
                 </ul>
             </div>
@@ -59,12 +41,30 @@
 <script>
     import Vue from 'vue'
     import headerTop from '@/components/header'
-    export default{
+    import {getData,getMonth} from '@/config/utils'
+    import { Toast } from 'mint-ui';
+    export default {
         data(){
             return {
-                
+                activityAmount:'',
+                actualAmount:'',
+                bcAmount:'',
+                crebitAmount:'',
+                debitAmount:'',
+                handlingChargeCount:'',
+                obcAmount:'',
+                transAmount:'',
+                transNumber:''
             }
         },
+        created(){
+            
+            getData(this,{"transMonth":getMonth().split('-').join('')},'/mss/api/countMonthFlw.do',(data)=>{
+                for(var attr in data.data.data){
+                    this[attr]=data.data.data[attr]
+                }
+            });
+        },  
         components:{
             headerTop
         }

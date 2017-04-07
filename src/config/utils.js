@@ -1,4 +1,5 @@
 import {  Toast } from 'mint-ui'
+import axios from 'axios'
 /**
  * 存储localStorage
  */
@@ -48,6 +49,20 @@ export const removeCookie = key => {
 	setCookie(key,"",-1);
 }
 
+export const getData = (_this,para,url,call) => {
+    var params=setparams(para)
+    axios ({
+        method:'post',
+        data:params,
+        url:url
+    })
+    .then((response) => {
+        if(errorhandle(response,_this)){
+            call && call(response)
+        }
+    })
+}
+
 export const setparams = par => {
     var params=new URLSearchParams();
     params.append('json', '{sessionId:"'+getStore('sessionId')+'",data:'+JSON.stringify(par)+'}');
@@ -75,3 +90,18 @@ export const errorhandle = (response,_this) => {
         return true
     }
 }
+
+export const getMonth = () => {
+    var dateNow=new Date();
+	var yearNow=dateNow.getFullYear();
+	var monthNow=dateNow.getMonth();
+	if(monthNow==0){
+		var newMonth=12;
+		var newYear=yearNow-1;
+	}else{
+		var newMonth=monthNow<10?"0"+monthNow:monthNow;
+		var newYear=yearNow;
+	}
+	return newYear+"-"+newMonth;
+}
+

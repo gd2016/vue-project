@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -48,5 +50,21 @@ export default {
       .mint-toast-text{
           color:white;
       }
+  }
+  .branchA{
+        .picker{
+            .picker-items{
+                .picker-item{
+                    font-size: 0.4rem ;
+                    padding: 0;
+                }
+            }
+        }
+    }
+  .mint-indicator-mask{
+    z-index: 8888;
+  }
+  .mint-indicator-wrapper{
+    z-index: 5;
   }
 </style>

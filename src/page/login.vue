@@ -8,11 +8,11 @@
             <section class="inputBox">
                 <div class="userName">
                     <span class="iconname iconfont icon-yonghuming"></span>
-                    <input type="text" placeholder="请输入商户号或手机号" v-model="mobileNo" />
+                    <input type="text" placeholder="请输入商户号或用户名" v-model="mobileNo" autofocus />
                 </div>
                 <div class="userPwd">
                     <span class="iconpwd iconfont icon-mima"></span>
-                    <input type="text" placeholder="请输入密码"  v-model="loginPwd" />
+                    <input type="password" placeholder="请输入密码"  v-model="loginPwd" />
                 </div>
             </section>
             <section class="login">
@@ -37,7 +37,7 @@
 <script>
     import Vue from 'vue'
     import headerTop from '../components/header'
-    import { Button,Toast } from 'mint-ui'
+    import { Button,Toast,Indicator } from 'mint-ui'
     import axios from 'axios'
     import {getStore, setStore,setCookie,getCookie,removeCookie,setparams} from '@/config/utils'
     Vue.component(Button.name, Button)
@@ -96,6 +96,7 @@
                             setCookie('username',this.mobileNo,5)
                         }
                         setStore('sessionId',response.data.data.sessionId)
+                        Indicator.open('正在登陆...');
                         this.$router.push({path:'index'})
                     }
                 })

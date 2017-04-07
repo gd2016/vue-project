@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/mss': {
-        target: 'http://localhost:8082',
+        target: 'http://172.16.17.158',
         changeOrigin: true
       }
     },

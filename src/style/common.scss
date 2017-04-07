@@ -14,7 +14,9 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
         outline: none;
     }
 }
-
+input{
+    background: none
+}
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
 ::-webkit-scrollbar  
 {  
@@ -96,4 +98,14 @@ html,body{
 
 .paddingTop{
     padding-top: 1.95rem;
+}
+
+.childPage{
+    position: absolute;
+    top: 0;
+    left:0;
+    right: 0;
+    min-height: 100%;
+    background: #f6f6f6;
+    padding-top: 1.6rem;
 }
