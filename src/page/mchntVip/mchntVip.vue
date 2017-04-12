@@ -72,6 +72,9 @@
                 "pageSize":10
             }
             getData(this,data,'/mss/api/findVip.do',(data)=>{
+                if(data.data.data.length<10){
+                    this.loadMore=false
+                }
                 this.vipList=data.data.data;
                 this.$nextTick(()=>{
                     this.vipScroll = new BScroll('#vipList', {

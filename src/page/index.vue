@@ -11,7 +11,7 @@
             </div>
             <div class="navListContainer">
                 <ul class="clear navList">
-                    <router-link :to="{path: '/business'}" tag="li">
+                    <router-link :to="{path: '/sign'}" tag="li">
                         <img src="../images/btn_menu_icon01.png"/>
                         <p>商户收单</p>
                     </router-link>
@@ -114,9 +114,7 @@
      padding-top: 1.6rem;
      padding-bottom: 2rem;
  }
-    .container{
-        
-    }
+    
     .swiper{
         height: 5rem;
         img{
@@ -129,6 +127,7 @@
             width: 33.3%;
             float: left;
             padding: 0.5rem 0.9rem 0 0.6rem;
+            text-align: center;
             img{
                 @include wh(1.4rem,1.4rem);
             }

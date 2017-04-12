@@ -13,6 +13,7 @@ const addVip = r =>require.ensure([],()=>r(require('../page/mchntVip/children/vi
 const detailVip = r =>require.ensure([],()=>r(require('../page/mchntVip/children/detailVip')),'detailVip')
 const settings = r =>require.ensure([],()=>r(require('../page/settings/settings')),'settings')
 const changePwd = r =>require.ensure([],()=>r(require('../page/settings/children/changePwd')),'changePwd')
+const sign = r =>require.ensure([],()=>r(require('../page/sign/sign')),'sign')
 
 export default [
     {
@@ -63,5 +64,8 @@ export default [
         path:'changePwd',
         component:changePwd,
       }]
+    },{
+      path:'/sign',
+      component:sign
     }
 ]

@@ -70,7 +70,7 @@
                         <div class="detailFlow" v-if="item.show">
                             <ul class="detaillistBox">
                                 <li @click="getDetail(items.serialNo,items.transDatetime)" class="detaillist clear"  v-for="(items,indexs) in item.detail" :key="indexs">
-                                    <section class="iconBox back_img">
+                                    <section :class='{iconbg1:items.transType=="2022"||items.transType=="2022"||items.transType=="4022"||items.transType=="1022"||items.transType=="3022",iconbg2:items.transType=="4064",iconbg3:items.transType=="4067",iconbg4:items.transType=="4062",iconbg5:items.transType=="3053"||items.transType=="3054"||items.transType=="3025"||items.transType=="1031"}' class="iconBox back_img">
                                         <!--<img src="../../../images/list_icon01.png"/>-->
                                     </section>
                                     <section class="detailtype">
