@@ -72,8 +72,7 @@
                         position: 'bottom',
                         duration: 1500
                     });
-                    this.$router.push({path:'/mchntVip'})
-                    this.$router.go(0)
+                    this.$router.go(-1)
                 })
             }
         },

@@ -1,5 +1,5 @@
 <template>
-    <div class="loginPage">
+    <div class="loginPage childPage">
         <header-top headtitle="用户登陆" ></header-top>
         <div class="content">
             <section class="imgBox">
@@ -73,9 +73,10 @@
                     });
                     return 
                 }
+                
                 var params=setparams({
                     mobileNo:this.mobileNo,
-                    loginPwd:this.loginPwd,
+                    loginPwd:this.loginPwd
                 })
                 // var params=new URLSearchParams();
                 // params.append('json', '{data:{mobileNo:'+this.mobileNo+',loginPwd:'+this.loginPwd+'}}');
@@ -85,13 +86,16 @@
                     url:'/mss/api/loginByMobile.do'
                 })
                 .then((response) => {
+                    
                     if(response.data.returnCode!=="1"){
+                        
                         Toast({
                             message: response.data.errMessage,
                             position: 'bottom',
                             duration: 1000
                         });
                     }else{
+                        
                         if(this.remember){
                             setCookie('username',this.mobileNo,5)
                         }

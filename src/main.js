@@ -16,7 +16,10 @@ if ('addEventListener' in document) {
 Vue.use(VueRouter)
 const router=new VueRouter({
   routes,
-  mode:'history'
+  mode:'history',
+  scrollBehavior (to, from, savedPosition) {
+    return {y:0}// return 期望滚动到哪个的位置
+  }
 })
 
 

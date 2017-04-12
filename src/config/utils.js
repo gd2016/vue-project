@@ -64,7 +64,8 @@ export const getData = (_this,para,url,call) => {
 }
 
 export const setparams = par => {
-    var params=new URLSearchParams();
+    
+    var params=new FormData();
     params.append('json', '{sessionId:"'+getStore('sessionId')+'",data:'+JSON.stringify(par)+'}');
     return params
 }

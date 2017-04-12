@@ -33,7 +33,7 @@
 <script>
     import Vue from 'vue'
     import headerTop from '@/components/header'
-    import { Field,Popup,Picker,Toast} from 'mint-ui'
+    import { Field,Popup,Picker,Toast,MessageBox } from 'mint-ui'
     import {getData} from '@/config/utils'
     Vue.component(Field.name, Field)
     Vue.component(Popup.name, Popup);
@@ -52,14 +52,14 @@
                 isClick:false,
                 mobileDisabled:true,
                 vipLevel:[{
-                    values: ['白银','黄金','铂金','钻石']
+                    defaultIndex:this.$route.query.level-0,
+                    values: ['钻石','铂金','黄金','白银']
                 }]
             }
         },
         props: ['vipInfo'],
         created(){
             var info = this.$route.query;
-            console.log(this.$route.query)
             for(var attr in info){
                 this[attr]=info[attr]
             }
@@ -71,7 +71,11 @@
                 }
             },
             levelChange(picker,values){
-                
+                if(this.isClick){
+                    this.formatLevel=values[0]
+                    this.level=this.levelAnitformat
+                    
+                }
             },
             vipEdit(){
                 this.isClick=true;
@@ -90,9 +94,24 @@
                         position: 'bottom',
                         duration: 1500
                     });
-                    this.$router.push({path:'/mchntVip'})
-                    this.$router.go(0)
+                    this.$router.go(-1)
                 })
+            },
+            vipDelete(){
+                MessageBox.confirm('确定执行此操作?').then(action => {
+                    var data={
+                        "vipId":this.vipId
+                    }
+                    getData(this,data,'/mss/api/closeVip.do',(data)=>{
+                        Toast({
+                            message: '删除会员成功',
+                            position: 'bottom',
+                            duration: 1500
+                        });
+                        this.$router.go(-1)
+                    })
+                });
+                
             }
         },
         computed:{
@@ -108,6 +127,17 @@
                     return "铂金"
                 }else if(this.level=="0"){
                     return "钻石"
+                }
+            },
+            levelAnitformat(){
+                if(this.formatLevel=="白银"){
+                    return "3"
+                }else if(this.formatLevel=="黄金"){
+                    return "2"
+                }else if(this.formatLevel=="铂金"){
+                    return "1"
+                }else if(this.formatLevel=="钻石"){
+                    return "0"
                 }
             }
         },

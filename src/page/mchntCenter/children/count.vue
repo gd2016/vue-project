@@ -4,8 +4,13 @@
             <div class="datemodule clear">
                 <span class="dateicon iconfont icon-riqi"></span>
                 <div class="selectDate">
-                    <span class="date">10/2016</span>
-                    <span class="selecticon iconfont icon-xiajiantou"></span>
+                    <p @click="dateshow=!dateshow"><span class="date">{{dateNow}}</span>
+                    <span class="selecticon iconfont icon-xiajiantou"></span></p>
+                    <ul @click="select($event)" v-if="dateshow" class="selectBox">
+                        <li>2017-03</li>
+                        <li>2017-02</li>
+                        <li>2017-01</li>
+                    </ul>
                 </div>
             </div>
             <div class="detailCount">
@@ -42,7 +47,7 @@
     import Vue from 'vue'
     import headerTop from '@/components/header'
     import {getData,getMonth} from '@/config/utils'
-    import { Toast } from 'mint-ui';
+    import { Toast ,Indicator} from 'mint-ui';
     export default {
         data(){
             return {
@@ -54,17 +59,40 @@
                 handlingChargeCount:'',
                 obcAmount:'',
                 transAmount:'',
-                transNumber:''
+                transNumber:'',
+                dateshow:false,
+                dateNow:''
             }
         },
         created(){
-            
+            this.dateNow=getMonth()
             getData(this,{"transMonth":getMonth().split('-').join('')},'/mss/api/countMonthFlw.do',(data)=>{
                 for(var attr in data.data.data){
                     this[attr]=data.data.data[attr]
                 }
             });
         },  
+        methods:{
+            select(e){
+                this.dateNow=e.target.innerText;
+                this.dateshow=!this.dateshow;
+                var date=this.dateNow.split('-').join('');
+                Indicator.open('正在加载数据...')
+                getData(this,{"transMonth":date},'/mss/api/countMonthFlw.do',(data)=>{
+                    if(data.data.data.length==0){
+                        Toast({
+                            message: '当前日期无交易',
+                            position: 'bottom',
+                            duration: 1500
+                        });
+                    }
+                    for(var attr in data.data.data){
+                        this[attr]=data.data.data[attr]
+                    }
+                    Indicator.close()
+                })
+            }
+        },
         components:{
             headerTop
         }
@@ -86,21 +114,46 @@
     .datemodule{
         padding: 0.3rem 0;
         background: linear-gradient(#f7f7f7,#f5f5f5);
-        .selectDate{
-            float: right;
-            border: solid 1px #b9b9b9;
-            padding: 0rem 0.25rem 0.05rem 0.85rem;
-            border-radius: 0.05rem;
-            margin-right: 0.1rem;
-            .date{
-                @include sc(0.35rem,$fontColor);
+        
+            .selectDate{
+                float: right;
+                margin-right: 0.1rem;
+                position: relative;
+                p{
+                    width: 100%;
+                    border: 1px solid #d1dbe5;
+                    border-radius: 0.15rem;
+                    text-align: center;
+                    height: 0.7rem;
+                    width: 3rem;
+                    line-height: 0.5rem;
+                    position: relative;
+                    text-indent: -0.1rem;
+                }
+                .selectBox{
+                    border:1px solid #d1dbe5;
+                    margin-top: 0.02rem;
+                    border-radius: 0.15rem;
+                    @include sc(0.35rem,$fontColor);
+                    position: absolute;
+                    background: $pageBg;
+                    width: 100%;
+                    li{
+                        text-align: center;
+                        line-height: 0.6rem;
+                        text-indent: -0.1rem;
+                    }
+                }
+                .date{
+                    @include sc(0.35rem,$fontColor);
+                }
+                .selecticon{
+                    @include sc(0.5rem,$bgColor);
+                    position: absolute;
+                    right:0.1rem;
+                }
+                
             }
-            .selecticon{
-                margin-left: 0.25rem;
-                @include sc(0.5rem,$bgColor);
-            }
-            
-        }
         .dateicon{
             float: right;
             @include sc(0.65rem,$bgColor);
@@ -110,6 +163,7 @@
     .detailCount{
         background: white;
         border-top: solid 1px $lineColor;
+        padding-bottom: 1.6rem;
         .listBox{
             .countList{
                 height: 1.45rem;

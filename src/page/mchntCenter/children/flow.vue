@@ -24,16 +24,16 @@
                         <div class="detailFlow" v-if="item.show">
                             <ul class="detaillistBox" v-if="item.detail">
                                 <li @click="getDetail(items.serialNo,items.transDatetime)" class="detaillist clear"  v-for="(items,indexs) in item.detail" :key="indexs">
-                                    <section class="iconBox">
-                                        <img src="../../../images/list_icon01.png"/>
+                                    <section :class='{iconbg1:items.transType=="2022"||items.transType=="2022"||items.transType=="4022"||items.transType=="1022"||items.transType=="3022",iconbg2:items.transType=="4064",iconbg3:items.transType=="4067",iconbg4:items.transType=="4062",iconbg5:items.transType=="3053"||items.transType=="3054"||items.transType=="3025"||items.transType=="1031"}' class="iconBox back_img">
+                                        <!--<img src="../../../images/list_icon01.png"/>-->
                                     </section>
                                     <section class="detailtype">
                                         <p class="font ellipsis">{{items.transTypeName}}</p>
-                                        <p class="time">{{items.transDatetime | datefomat}}</p>
+                                        <p class="time">{{items.transDatetime | dateformat}}</p>
                                     </section>
                                     <section class="detailstatus">
                                         <p class="transAmount ellipsis"><span>+{{items.actualAmount}}</span>元</p>
-                                        <p class="transFlag">交易成功</p>
+                                        <p :class="{success:items.transFlag=='1',fail:items.transFlag=='2',handling:items.transFlag=='0',cancel:items.transFlag=='4'}" class="transFlag">{{items.transFlag | flagformat}}</p>
                                     </section>
                                     <span class="middle"></span>
                                 </li>
@@ -70,16 +70,16 @@
                         <div class="detailFlow" v-if="item.show">
                             <ul class="detaillistBox">
                                 <li @click="getDetail(items.serialNo,items.transDatetime)" class="detaillist clear"  v-for="(items,indexs) in item.detail" :key="indexs">
-                                    <section class="iconBox">
-                                        <img src="../../../images/list_icon01.png"/>
+                                    <section class="iconBox back_img">
+                                        <!--<img src="../../../images/list_icon01.png"/>-->
                                     </section>
                                     <section class="detailtype">
                                         <p class="font ellipsis">{{items.transTypeName}}</p>
-                                        <p class="time">{{items.transDatetime | datefomat}}</p>
+                                        <p class="time">{{items.transDatetime | dateformat}}</p>
                                     </section>
                                     <section class="detailstatus">
                                         <p class="transAmount ellipsis"><span>+{{items.actualAmount}}</span>元</p>
-                                        <p class="transFlag">交易成功</p>
+                                        <p :class="{success:items.transFlag=='1',fail:items.transFlag=='2',handling:items.transFlag=='0',cancel:items.transFlag=='4'}" class="transFlag">{{items.transFlag | flagformat}}</p>
                                     </section>
                                     <span class="middle"></span>
                                 </li>
@@ -89,6 +89,9 @@
                 </ul>
             </section>
         </div>
+        <router-view :info="detailInfo">
+
+        </router-view>
     </div>
 </template>
 <script>
@@ -96,7 +99,7 @@
     import headerTop from '@/components/header'
     import {getData,getMonth} from '@/config/utils'
     import { InfiniteScroll,Indicator,Toast } from 'mint-ui'
-    Vue.use(InfiniteScroll);
+    Vue.use(Indicator);
     export default {
         data(){
             return {
@@ -106,7 +109,10 @@
                 transflowCount:[],
                 detailShow:false,
                 dateshow:false,
-                dateNow:''
+                dateNow:'',
+                detailInfo:'',
+                info:'',
+                showDetail:''
             }
         },
         created(){
@@ -167,12 +173,7 @@
                 }
             },
             getDetail(serialNo,date){
-                var data={
-                    "serialNo":serialNo,
-                    "transDatetime":date.substring(0,8)
-                }
-                getData(this,data,'/mss/api/getTransFlowDetail.do',(datas)=>{
-                })
+                this.$router.push({path:'detailFlow',query:{serialNo:serialNo,transDatetime:date.substring(0,8)}})
             },
             select(e){
                 this.dateNow=e.target.innerText;
@@ -195,8 +196,23 @@
             }
         },
         filters:{
-            datefomat:function(value){
+            dateformat:function(value){
                 return value.substring(8,10)+":"+value.substring(10,12)+":"+value.substring(12)
+            },
+            flagformat:function(value){
+                if(value=="0"){
+                    return '处理中'
+                }else if(value=="1"){   
+                    return '成功'
+                }else if(value=="2"){
+                    return '失败'
+                }else if(value=="3"){
+                    return '已冲正'
+                }else if(value=="4"){
+                    return '已撤销'
+                }else{
+                    return '未知'
+                }
             }
         },
         components:{
@@ -208,6 +224,7 @@
     @import '../../../style/mixin.scss';
     .mchntFlowPage{
         padding-top: 1.6rem;
+        padding-bottom: 1.6rem;
     }
     .mchntFlowPage{
         position: absolute;
@@ -216,7 +233,6 @@
         right: 0;
         min-height: 100%;
         background: $pageBg;
-        // overflow: auto;
     }
     .tab{
         height: 1.45rem;
@@ -282,7 +298,6 @@
                     @include sc(0.5rem,$bgColor);
                     position: absolute;
                     right:0.1rem;
-                    top: 0.1rem;
                 }
                 
             }
@@ -347,10 +362,22 @@
                     }
                     .iconBox{
                         margin-left: 0.8rem;
-                        width: 10%;
-                        img{
-                            @include wh(0.95rem,0.95rem);
-                        }
+                        @include wh(0.95rem,0.95rem);
+                    }
+                    .iconbg1{//消费
+                        background-image: url(../../../images/list_icon03.png)
+                    }
+                    .iconbg2{//交通罚款
+                        background-image: url(../../../images/list_icon06.png)
+                    }
+                    .iconbg3{//多渠道
+                        background-image: url(../../../images/list_icon07.png)
+                    }
+                    .iconbg4{//电费
+                        background-image: url(../../../images/list_icon02.png)
+                    }
+                    .iconbg5{//其他
+                        background-image: url(../../../images/list_icon01.png)
                     }
                     .detailtype{
                         margin-left:1rem;
@@ -376,7 +403,19 @@
                         }
                         .transFlag{
                             margin-top: 0.15rem;
-                            @include sc(0.33rem,#acacac);
+                            font-size: 0.33rem;
+                        }
+                        .success{
+                            color: green;
+                        }
+                        .fail{
+                            color: red;
+                        }
+                        .handling{
+                            color: royalblue;
+                        }
+                        .cancel{
+                            color: gray;
                         }
                     }
                 }

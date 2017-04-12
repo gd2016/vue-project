@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
       <router-view></router-view>
-    </keep-alive>
   </div>
 </template>
 
@@ -67,4 +65,20 @@ export default {
   .mint-indicator-wrapper{
     z-index: 5;
   }
+  .mint-spinner-fading-circle{
+        left:50%;
+        transform: translateX(-28px)
+    }
+    .detailInfo{
+            .mint-cell{
+                .mint-cell-wrapper{
+                    span{
+                        font-size: 0.35rem;
+                    }
+                    .mint-cell-value{
+                      font-size: 0.35rem;
+                    }
+                }
+            }
+        }
 </style>

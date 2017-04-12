@@ -88,6 +88,8 @@
                 secondBranchCode:'',
                 thirdBranchCode:'',
                 thirdBranchCodeNow:'',
+                areainitdata:'',
+                bankinitdata:'',
                 slots: [
                     {
                         flex:1,
@@ -132,12 +134,15 @@
             selectArea(){
                 this.popupVisible=true;
                 this.initarea=true;
+                this.area=this.areainitdata
             },
             selectBank(){
                 this.bankVisiable=true;
                 this.initbank=true;
+                this.bank=this.bankinitdata;
             },
             onAreaValuesChange(picker, values) {
+                this.areainitdata=picker.getValues().join('');
                 if(this.initarea){
                     this.area=picker.getValues().join('')
                 }
@@ -189,6 +194,7 @@
                 
             },
             onBankValuesChange(picker,values){
+                this.bankinitdata=picker.getValues().join('');
                 if(this.initbank){
                     this.bank=picker.getValues().join('')
                 }
@@ -266,8 +272,13 @@
                     "longitude":this.longitude,
                     "latitude":this.latitude        
                 }
-                getData(this,data,'/mss/api/getAllSecondBranch.do', (datas) => {
-                    
+                getData(this,data,'/mss/api/merchantApply.do', (datas) => {
+                    Toast({
+                        message: '入网申请成功',
+                        position: 'bottom',
+                        duration: 1500
+                    });
+                    this.$router.go(-1)
                 })
             },
             errorhandle(error){

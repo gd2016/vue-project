@@ -118,19 +118,19 @@
         
     }
     .swiper{
-        height: 5.8rem;
+        height: 5rem;
         img{
             @include wh(100%,100%)
         }
     }
     .navList{
-        padding: 0.65rem 0 0 0.5rem;
+        padding-left:  0.5rem;
         li{
             width: 33.3%;
             float: left;
-            padding: 0.8rem 0.9rem 0 0.6rem;
+            padding: 0.5rem 0.9rem 0 0.6rem;
             img{
-                @include wh(1.9rem,1.9rem);
+                @include wh(1.4rem,1.4rem);
             }
             p{
                 @include sc(0.4rem,$fontColor);

@@ -6,6 +6,8 @@ const business = r =>require.ensure([],()=>r(require('../page/business/business'
 const mchntCenter = r =>require.ensure([],()=>r(require('../page/mchntCenter/mchntCenter')),'mchntCenter')
 const flow = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/flow')),'flow')
 const count = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/count')),'count')
+
+const detailFlow = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/detailFlow')),'detailFlow')
 const mchntVip = r =>require.ensure([],()=>r(require('../page/mchntVip/mchntVip')),'mchntVip')
 const addVip = r =>require.ensure([],()=>r(require('../page/mchntVip/children/vipAdd')),'addVip')
 const detailVip = r =>require.ensure([],()=>r(require('../page/mchntVip/children/detailVip')),'detailVip')
@@ -40,6 +42,9 @@ export default [
       },{
         path:'count',
         component:count,
+      },{
+        path:'detailFlow',
+        component:detailFlow,
       }]
     },{
       path:'/mchntVip',

@@ -27,11 +27,14 @@ export default {
         width: 100%;
         height: 1.45rem;
         line-height: 1.45rem;
+        z-index: 9999;
+        left: 0;
+        background: none;
         .footul{
             width:100%;
             border-top: solid 1px $lineColor;
             background: white;
-            height: 100%;
+            height: 1.45rem;
             .liborder{
                 border-right: solid 1px $lineColor;
             }

@@ -1,5 +1,5 @@
 <template>
-    <div class="settingsPage">
+    <div class="settingsPage childPage">
         <header-top headtitle="设置" goback="true"></header-top>
         <div class="content">
             <ul class="listbox">
