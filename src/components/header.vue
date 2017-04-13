@@ -2,14 +2,19 @@
     <header class="header">
         <div class="header-container clear">
             <span v-if="goback" @click="$router.go(-1)" class="back iconfont icon-houtui"></span>
-            <span class="title">{{headtitle}}</span>
+            <span class="title" >{{headtitle}}</span>
             <router-link v-if="right"  :to="{path: '/settings'}" tag="span" class="more iconfont icon-ordinaryset">
             </router-link>
         </div> 
     </header>
 </template>
 <script>
-    export default{
+    export default {
+        data(){
+            return {
+                
+            }
+        },
         props:['headtitle','goback','right']
     }
 </script>

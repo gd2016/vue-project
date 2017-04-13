@@ -1,5 +1,5 @@
 <template>
-    <div class="businessPage">
+    <div class="page">
         <header-top headtitle="便民业务" goback="true"></header-top>
         <div class="content">
             <ul class="businessNav clear">
@@ -11,10 +11,10 @@
                     <img src="../../images/btn_business_icon02.png"/>
                     <p>燃气缴费</p>
                 </li>
-                <li>
+                <router-link :to="{path: '/business/payment'}" tag="li">
                     <img src="../../images/btn_business_icon03.png"/>
                     <p>电力缴费</p>
-                </li>
+                </router-link>
                 <li>
                     <img src="../../images/btn_business_icon04.png"/>
                     <p>水费缴费</p>
@@ -30,7 +30,7 @@
 
             </ul>
         </div>
-
+        <router-view></router-view>
     </div>
 </template>
 <script>
@@ -49,9 +49,6 @@
 </script>
 <style scoped lang="scss">
 @import '../../style/mixin.scss';
-.businessPage{
-    padding-top: 1.6rem;
-}
     .businessNav{
         padding: 0.3rem 0 0 0;
         li{

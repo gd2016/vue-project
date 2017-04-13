@@ -1,4 +1,4 @@
-import {  Toast } from 'mint-ui'
+import {  Toast ,Indicator} from 'mint-ui'
 import axios from 'axios'
 /**
  * 存储localStorage
@@ -79,12 +79,14 @@ export const errorhandle = (response,_this) => {
                 duration: 1000
             });
             _this.$router.push({path:'/login'})
+            Indicator.close()
         }else{
             Toast({
                 message: response.data.errMessage,
                 position: 'bottom',
                 duration: 1000
             });
+            Indicator.close()
             return false
         }
     }else{

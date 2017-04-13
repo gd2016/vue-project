@@ -1,5 +1,5 @@
 <template>
-    <div class="signPage childPage">
+    <div class="page">
         <header-top headtitle="签名" goback="true"></header-top>
         <div class="content">
             <p class="point"><span class="iconfont icon-qianming"></span>签名确认</p>
@@ -13,15 +13,15 @@
                     </canvas>
                 </div>
             </div>
-            
+            <div class="buttons">
+                <mt-button class="btn" @click="getImage()" size="normal" type="danger">确定</mt-button>
+                <mt-button class="btn" @click="clear()" size="normal" type="danger">重置</mt-button>
+            </div>
+            <div class="imglook">
+                <img :src="imgUrl"/>
+            </div>
         </div>
-        <div class="buttons">
-            <mt-button class="btn" @click="getImage()" size="normal" type="danger">确定</mt-button>
-            <mt-button class="btn" @click="clear()" size="normal" type="danger">重置</mt-button>
-        </div>
-        <div class="imglook">
-            <img :src="imgUrl"/>
-        </div>
+       
     </div>
 </template>
 <script>

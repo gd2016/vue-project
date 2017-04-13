@@ -1,5 +1,5 @@
 <template>
-    <div class="vipDetailPage childPage">
+    <div class="childPage">
         <header-top headtitle="会员详情" goback="true"></header-top>
         <div class="content">
             <mt-field disabled v-model="vipName" label="会员姓名："></mt-field>
@@ -17,17 +17,18 @@
                     </div>
                 </div>
             </a>
+            <div class="buttons">
+                <mt-button v-if="!isClick" class="btn" @click="vipEdit()" size="normal" type="danger">修改信息</mt-button>
+                <mt-button v-if="isClick" class="btn" @click="confirm()" size="normal" type="danger">确定修改</mt-button>
+                <mt-button class="btn" @click="vipDelete()" size="normal" type="danger">会员注销</mt-button>
+            </div>
+            <div :class="{hide:popupVisibel==false}" class="levelSelectBox" @click="popupVisibel=false">
+            <mt-popup    v-model="popupVisibel"  position="bottom">
+                    <mt-picker @change="levelChange" :slots="vipLevel"></mt-picker>
+                </mt-popup>
+            </div>
         </div>
-        <div class="buttons">
-            <mt-button v-if="!isClick" class="btn" @click="vipEdit()" size="normal" type="danger">修改信息</mt-button>
-            <mt-button v-if="isClick" class="btn" @click="confirm()" size="normal" type="danger">确定修改</mt-button>
-            <mt-button class="btn" @click="vipDelete()" size="normal" type="danger">会员注销</mt-button>
-        </div>
-        <div :class="{hide:popupVisibel==false}" class="levelSelectBox" @click="popupVisibel=false">
-          <mt-popup    v-model="popupVisibel"  position="bottom">
-                <mt-picker @change="levelChange" :slots="vipLevel"></mt-picker>
-            </mt-popup>
-        </div>
+        
     </div>
 </template>
 <script>
@@ -57,7 +58,6 @@
                 }]
             }
         },
-        props: ['vipInfo'],
         created(){
             var info = this.$route.query;
             for(var attr in info){
@@ -90,7 +90,7 @@
                 }
                 getData(this,data,'/mss/api/updateVip.do',(data)=>{
                     Toast({
-                        message: '添加会员成功',
+                        message: '修改会员成功',
                         position: 'bottom',
                         duration: 1500
                     });
@@ -111,7 +111,6 @@
                         this.$router.go(-1)
                     })
                 });
-                
             }
         },
         computed:{

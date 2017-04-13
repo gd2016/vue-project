@@ -1,5 +1,5 @@
 <template>
-    <div class="mchntCenterPage">
+    <div class="footerPage">
         <header-top headtitle="商户中心" goback="true" right="true"></header-top>
         <div class="content">
             <section class="searchList clear">
@@ -18,16 +18,40 @@
                     <span>商户信息</span>
                     <span class="middle"></span>
                 </div>
-                <div class="detailInfo">
-                    <p>商户名称：<span class="value">{{mchntCnNm}}</span></p>
-                    <p>商户编号：<span class="value">{{mchntCd}}</span></p>
-                    <p>所属收单机构：<span class="value">{{branchName}}</span></p>
-                    <p>申请日期：<span class="value">{{registerDatetime}}</span></p>
-                    <p>营业执照号码：<span class="value">{{licNo}}</span></p>
-                    <p>注册资本：<span class="value">1000万</span></p>
-                    <p>法人代表：<span class="value">{{artifNm}}</span></p>
-                    <p>结算账户账号：<span class="value">{{settleNoEncry}}</span></p>
-                    <p>绑定设备：<span class="value">杭州店</span></p>
+                <div class="detailInfo clear">
+                    <table>
+                        <tr>
+                            <td width="35%">商户名称：</td>
+                            <td width="65%">{{mchntCnNm}}</td>
+                        </tr>
+                        <tr>
+                            <td>商户编号：</td>
+                            <td>{{mchntCd}}</td>
+                        </tr>
+                        <tr>
+                            <td>所属收单机构：</td>
+                            <td>{{branchName}}</td>
+                        </tr>
+                        <tr>
+                            <td>申请日期：</td>
+                            <td>{{registerDatetime}}</td>
+                        </tr>
+                        <tr>
+                            <td>营业执照号码：</td><td>{{licNo}}</td>
+                        </tr>
+                        <tr>
+                            <td>注册资本：</td><td>1000万</td>
+                        </tr>
+                        <tr>
+                            <td>法人代表：</td><td>{{artifNm}}</td>
+                        </tr>
+                        <tr>
+                            <td>结算账户账号：</td><td>{{settleNoEncry}}</td>
+                        </tr>
+                        <tr>
+                            <td>绑定设备：</td><td>杭州店</td>
+                        </tr>
+                    </table>
                 </div>
             </section>
         </div>
@@ -69,29 +93,24 @@
 </script>
 <style scoped lang="scss">
     @import '../../style/mixin.scss';
-    .mchntCenterPage{
-        padding-top: 1.6rem;
-    }
-    .content{
-        padding-bottom: 1.6rem;
-    }
+    
     .searchList{
         border-bottom: solid 1px $lineColor;
         background: white;
         .part{
             width: 50%;
             text-align: center;
-            height: 2.7rem;
-            padding-top: 0.35rem;
+            height: 2rem;
+            padding-top: 0.2rem;
             p{
-                @include sc(0.38rem,$fontColor)
+                @include sc(0.35rem,$fontColor)
             }
         }
         .transflow{
             border-right: solid 1px $lineColor;
         }
         img{
-            @include wh(1.44rem,1.44rem);
+            @include wh(1rem,1rem);
         }
         p{
             @include sc(0.38rem,$fontColor)
@@ -100,10 +119,11 @@
     .detailbox{
         margin-top: 0.3rem;
         border-top: solid 1px $lineColor;
+        border-bottom: solid 1px $lineColor;
         background: white;
         .detailTitle{
-            height: 1.3rem;
-            line-height: 1.3rem;
+            height: 1.2rem;
+            line-height: 1.2rem;
             border-bottom: solid 1px $lineColor;
             img{
                 @include wh(0.95rem,0.95rem);
@@ -121,14 +141,19 @@
             
         }
         .detailInfo{
-            padding: 0.30rem 0 0.15rem 1.15rem;
-            font-size: 0.38rem;
-            p{
-                line-height: 0.76rem;   
-                span{
-                    color:$lineColor;
-                    margin-left: 0.15rem;
-                }
+            font-size: 0.35rem;
+            table{
+                width: 100%;
+            }
+            tr{
+                height: 0.75rem;
+            }
+            td:nth-child(odd){
+                text-align: right;
+                
+            }
+            td:nth-child(even){
+                text-align: left;
             }
         }
     }

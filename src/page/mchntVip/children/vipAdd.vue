@@ -1,32 +1,30 @@
 <template>
-    <div class="vipAddPage childPage">
-        <header-top headtitle="会员添加" goback="true"></header-top>
-        <div class="content">
-            <mt-field v-model="vipName" label="姓名" placeholder="请输入会员姓名"></mt-field>
-            <mt-field v-model="mobileNo" label="手机号" placeholder="请输入会员手机号"></mt-field>
-            <a class="mint-cell mint-field">
-                <div class="mint-cell-wrapper">
-                    <div class="mint-cell-title">
-                        <span class="mint-cell-text">会员等级</span> 
-                    </div> 
-                    <div class="mint-cell-value" @click="selectLevel()">
-                       <input style="background:white" v-model="level" disabled placeholder="选择会员等级" type="text" class="mint-field-core"> 
+        <div class="childPage">
+            <header-top headtitle="会员添加" goback="true"></header-top>
+            <div class="content">
+                <mt-field v-model="vipName" label="姓名" placeholder="请输入会员姓名"></mt-field>
+                <mt-field v-model="mobileNo" label="手机号" placeholder="请输入会员手机号"></mt-field>
+                <a class="mint-cell mint-field">
+                    <div class="mint-cell-wrapper">
+                        <div class="mint-cell-title">
+                            <span class="mint-cell-text">会员等级</span> 
+                        </div> 
+                        <div class="mint-cell-value" @click="selectLevel()">
+                        <input style="background:white" v-model="level" disabled placeholder="选择会员等级" type="text" class="mint-field-core"> 
+                        </div>
                     </div>
+                </a>
+                <div class="buttons">
+                    <mt-button class="btn" @click="vipAdd()" size="normal" type="danger">确定</mt-button>
+                    <mt-button class="btn" @click="$router.go(-1)" size="normal" type="danger">取消</mt-button>
                 </div>
-            </a>
+                <div :class="{hide:popupVisibel==false}" class="levelSelectBox" @click="popupVisibel=false">
+                    <mt-popup  v-model="popupVisibel"  position="bottom">
+                        <mt-picker @change="levelChange" :slots="vipLevel"></mt-picker>
+                    </mt-popup>
+                </div>
+            </div>
         </div>
-        <div class="buttons">
-            <mt-button class="btn" @click="vipAdd()" size="normal" type="danger">确定</mt-button>
-            <mt-button class="btn" @click="$router.go(-1)" size="normal" type="danger">取消</mt-button>
-        </div>
-        <div :class="{hide:popupVisibel==false}" class="levelSelectBox" @click="popupVisibel=false">
-          <mt-popup    v-model="popupVisibel"  position="bottom">
-                <mt-picker @change="levelChange" :slots="vipLevel"></mt-picker>
-            </mt-popup>
-        </div>
-    </div>
-    
-    
 </template>
 <script>
     import Vue from 'vue'

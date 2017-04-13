@@ -1,5 +1,5 @@
 <template>
-    <div class="settingsPage childPage">
+    <div class="page">
         <header-top headtitle="设置" goback="true"></header-top>
         <div class="content">
             <ul class="listbox">
@@ -66,9 +66,6 @@
 </script>
 <style scoped lang="scss">
 @import '../../style/mixin.scss';
-.settingsPage{
-    padding-top: 1.6rem;
-}
 .content{
     .listbox{
         background: white;

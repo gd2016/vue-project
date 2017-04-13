@@ -83,7 +83,7 @@
 <style scoped lang="scss">
      @import '../../../style/mixin.scss';
      .detailFlowPage{
-        z-index: 99999
+        z-index: 10000
      }
         .detailbox{
         border-top: solid 1px $lineColor;

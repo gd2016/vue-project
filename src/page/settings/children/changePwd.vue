@@ -1,14 +1,14 @@
 <template>
-    <div class="changePwdPage">
+    <div class="childPage">
         <header-top headtitle="修改密码" goback="true"></header-top>
         <div class="content">
             <mt-field v-model="oldLoginPwd" label="原密码" placeholder="请输入原始密码"></mt-field>
             <mt-field v-model="newLoginPwd" label="新密码" placeholder="请输入新密码" type="password"></mt-field>
             <mt-field v-model="reNewLoginPwd" label="再次输入" placeholder="请输入再次输入新密码" type="password"></mt-field>
-        </div>
-        <div class="buttons">
-            <mt-button class="btn" @click="change()" size="normal" type="danger">确定</mt-button>
-            <mt-button class="btn" @click="$router.go(-1)" size="normal" type="danger">取消</mt-button>
+            <div class="buttons">
+                <mt-button class="btn" @click="change()" size="normal" type="danger">确定</mt-button>
+                <mt-button class="btn" @click="$router.go(-1)" size="normal" type="danger">取消</mt-button>
+            </div>
         </div>
     </div>
 </template>
@@ -92,16 +92,6 @@
 </script>
 <style scoped lang="scss">
     @import '../../../style/mixin.scss';
-    .changePwdPage{
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 4;
-        background: $pageBg;
-        padding-top: 1.6rem;
-    }
     .btn{
         background: $bgColor;
         height: 1rem;

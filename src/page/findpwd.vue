@@ -1,5 +1,5 @@
 <template>
-    <div class="findPwdPage">
+    <div class="page">
         <header-top headtitle="短信找回密码" goback="true"></header-top>
         <div class="content">
             <div class="forminfo">
@@ -75,14 +75,11 @@
 
 <style scoped lang="scss">
     @import '../style/mixin.scss';
-    .findPwdPage{
-        padding-top: 1.6rem;
-    }
     .getyzm{
         background: #f2d9d6;
         color:$bgColor;
         @include wh(3rem,0.8rem);
-        margin-top:0.35rem;
+        margin-top:0.3rem;
         margin-right: 0.5rem;
     }
     .regBtn{

@@ -1,5 +1,5 @@
 <template>
-    <div class="loginPage childPage">
+    <div class="page childPage">
         <header-top headtitle="用户登陆" ></header-top>
         <div class="content">
             <section class="imgBox">
@@ -113,9 +113,6 @@
 </script>
 <style scoped lang="scss">
     @import '../style/mixin.scss';
-    .loginPage{
-        padding-top: 1.6rem;
-    }
     .content{
         width: 7.6rem;
         margin: 0 auto;

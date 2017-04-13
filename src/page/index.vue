@@ -1,7 +1,7 @@
 <template>
-    <div class="indexPage">
-        <div class="container">
-            <header-top headtitle="徽信宝" right="true"></header-top>
+    <div class="footerPage">
+        <header-top headtitle="徽信宝" right="true"></header-top>
+        <div class="content">
             <div class="swiper">
                 <mt-swipe :auto="4000">
                     <mt-swipe-item v-for="(item,index) in swiperImg" :key="index">
@@ -31,10 +31,6 @@
                         <img src="../images/btn_menu_icon05.png"/>
                         <p>更多功能</p>
                     </router-link>
-                    <li @click="tojava()">
-                        <img src="../images/btn_menu_icon05.png"/>
-                        <p>调java</p>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -110,11 +106,6 @@
 </script>
 <style scoped lang="scss">
  @import '../style/mixin.scss';
- .indexPage{
-     padding-top: 1.6rem;
-     padding-bottom: 2rem;
- }
-    
     .swiper{
         height: 5rem;
         img{

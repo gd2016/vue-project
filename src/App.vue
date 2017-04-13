@@ -13,6 +13,22 @@ export default {
 <style lang="scss">
   @import './style/common';
   @import './style/mixin.scss';
+  #app{
+    height: 100%;
+  }
+  .footerPage{
+      padding-top: 1.6rem;
+      height: 100%;
+      padding-bottom: 1.45rem;
+  }
+  .page{
+      padding-top: 1.6rem;
+      height: 100%;   
+  }
+  .content{
+      height: 100%;
+      overflow: auto;
+  }
   .mint-field{
     .mint-cell-wrapper{
       height: 1.2rem;
@@ -65,9 +81,14 @@ export default {
   .mint-indicator-wrapper{
     z-index: 5;
   }
+  .spinner{
+    height: 1rem;
+    display: block;
+  }
   .mint-spinner-fading-circle{
         left:50%;
-        transform: translateX(-28px)
+        top: 50%;
+        transform: translate(-14px,-14px);
     }
     .detailInfo{
             .mint-cell{

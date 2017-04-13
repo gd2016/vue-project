@@ -1,5 +1,5 @@
 <template>
-    <div class="registerPage">
+    <div class="page">
         <header-top headtitle="入网申请" goback="true"></header-top>
         <div class="content">
             <div class="forminfo">
@@ -322,9 +322,6 @@
 
 <style scoped lang="scss">
     @import '../style/mixin.scss';
-    .registerPage{
-        padding-top: 1.6rem;
-    }
     .regBtn{
         padding: 0 1.3rem;
     }

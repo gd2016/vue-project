@@ -3,6 +3,7 @@ const register = r =>require.ensure([],()=>r(require('../page/register')),'regis
 const login = r =>require.ensure([],()=>r(require('../page/login')),'login')
 const index = r =>require.ensure([],()=>r(require('../page/index')),'index')
 const business = r =>require.ensure([],()=>r(require('../page/business/business')),'business')
+const payment = r =>require.ensure([],()=>r(require('../page/business/children/payment')),'payment')
 const mchntCenter = r =>require.ensure([],()=>r(require('../page/mchntCenter/mchntCenter')),'mchntCenter')
 const flow = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/flow')),'flow')
 const count = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/count')),'count')
@@ -33,7 +34,11 @@ export default [
       component:findpwd
     },{
       path:'/business',
-      component:business
+      component:business,
+      children:[{
+        path:'payment',
+        component:payment,
+      }]
     },{
       path:'/mchntCenter',
       component:mchntCenter,
