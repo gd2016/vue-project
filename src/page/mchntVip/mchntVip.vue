@@ -16,14 +16,14 @@
                     <span class="searchIcon iconfont icon-chaxun"></span>
                     <input type="text" @keyup="findvip()" v-model="vipName"  placeholder="输入会员名称查询"/>
                 </div>
-                <router-link tag="a"  :to="{path:'/mchntVip/addVip'}">
-                    <mt-button class="addVip" type="danger" size="small">会员录入</mt-button>
-                </router-link>
+                <!--<router-link tag="a"  :to="{path:'/mchntVip/addVip'}">-->
+                    <mt-button @click="VIP_ADD_SHOW()" class="addVip" type="danger" size="small">会员录入</mt-button>
+                <!--</router-link>-->
             </div>
             <div class="mchntModule" id="vipList">
-                <ul class="listBox">
-                    <li class="mchntList clear" v-for="(item,index) in vipList">
-                        <router-link class="link" :to="{path:'/mchntVip/detailVip',query:{vipName:item.vipName,mobileNo:item.mobileNo,createDatetime:item.createDatetime,integral:item.integral,level:item.vipLevel,vipId:item.vipId}}">
+                <ul class="listBox" ref="scrollList" @scroll="scorllHandle($event)">
+                    <li @click="getDetail(item)" class="mchntList clear" v-for="(item,index) in vipList">
+                        <!--<router-link class="link" :to="{path:'/mchntVip/detailVip',query:{vipName:item.vipName,mobileNo:item.mobileNo,createDatetime:item.createDatetime,integral:item.integral,level:item.vipLevel,vipId:item.vipId}}">-->
                         <div class="left mchntName ellipsis">
                             <span :class="{nameicon0:item.vipLevel=='0',nameicon1:item.vipLevel=='1',nameicon2:item.vipLevel=='2',nameicon3:item.vipLevel=='3'}" class="iconfont icon-yonghuming"></span>
                             <span class="name ">会员姓名：<a class="values ">{{item.vipName}}</a></span>
@@ -32,20 +32,27 @@
                             <span :class="{intergralicon0:item.vipLevel=='0',intergralicon1:item.vipLevel=='1',intergralicon2:item.vipLevel=='2',intergralicon3:item.vipLevel=='3'}" class="intergralicon iconfont icon-huiyuanjifen"></span>
                             <span class="intergral">会员积分：<a class="values">{{item.integral}}</a></span>
                         </div>
-                        </router-link>
+                        <!--</router-link>-->
                     </li>
                     <mt-spinner v-show="loadMore" class="spinner"  :type="3"></mt-spinner>
                 </ul>
             </div>
         </div>
-        <router-view></router-view>
+        <vip-add v-show="vipAddShow" v-on:confirm="reloadData"></vip-add>
+        <detail-vip info="detailInfo" v-on:confirm="reloadData" v-if="vipDetailShow"></detail-vip>
+        <!--<keep-alive>
+        <router-view ></router-view>
+        </keep-alive>-->
     </div>
 </template>
 <script>
     import Vue from 'vue'
-    import headerTop from '../../components/header'
+    import {mapMutations,mapState} from 'vuex'
+    import headerTop from '@/components/header'
+    import vipAdd from '@/components/vipAdd'
+    import detailVip from '@/components/detailVip'
     import {getData} from '@/config/utils'
-    import { Toast,Button,Spinner,Indicator  } from 'mint-ui';
+    import { Toast,Button,Spinner,Indicator  } from 'mint-ui'
     import BScroll from 'better-scroll'
     Vue.component(Button.name, Button);
     Vue.component(Spinner.name, Spinner);
@@ -61,13 +68,38 @@
                 pageNo:1,
                 vipName:'',
                 loadMore:true,//防止重复加载
-                hasLoad:false//
+                hasLoad:false,
+                addShow:false,
+                detailInfo:''
             }
         },
-        mounted(){
+        computed:{
+            ...mapState([
+                'vipAddShow','vipDetailShow'
+            ]),
+        },
+        created(){
             this.initdata()
         },
         methods:{
+            ...mapMutations([
+                'VIP_ADD_SHOW','VIP_DETAIL_SHOW'
+            ]),
+            reloadData(){
+                this.initdata();
+                this.loadMore=true;//重置记录信息
+                this.pageNo=1;
+                this.$refs.scrollList.scrollTop=0;
+            },
+            getDetail(item){
+                this.detailInfo=item;
+                this.VIP_DETAIL_SHOW(item)
+            },
+            scorllHandle(e){
+                if(e.target.scrollTop+e.target.offsetHeight>=e.target.scrollHeight){
+                    this.loadData() 
+                }
+            },
             initdata(){
                 Indicator.open('正在加载...')
                 getData(this,'','/mss/api/countVipAndIntegral.do',(data)=>{
@@ -80,25 +112,11 @@
                 }
                 getData(this,data,'/mss/api/findVip.do',(data)=>{
                     if(data.data.data.length<10){
+                        console.log('xiaoyu')
                         this.loadMore=false
                     }
                     this.vipList=data.data.data;
                     Indicator.close()
-                    this.$nextTick(()=>{
-                        this.vipScroll = new BScroll('#vipList', {
-                            momentum:true,
-                            bounce:false,
-                            scrollY:true,
-                            probeType:3,
-                            click:true,
-                            deceleration:0.006
-                        })
-                        this.vipScroll.on('scroll', (pos) => {
-                            if (Math.abs(Math.round(pos.y)) >=  Math.abs(Math.round(this.vipScroll.maxScrollY))) {
-                                this.loadData()
-                            }
-                        })
-                    })
                 });
             },
             findvip() {
@@ -121,11 +139,7 @@
                             this.loadMore=false
                         }
                         this.vipList=data
-                        this.$nextTick(()=>{
-                            this.vipScroll.refresh()
-                        })
                         this.timer=""
-                        this.vipScroll.scrollTo(0,0)
                     });
                 }, 1500);
             },
@@ -151,9 +165,6 @@
                             }
                             this.loadMore=true;
                         }
-                        this.$nextTick(()=>{
-                            this.vipScroll.refresh();
-                        })
                         this.hasLoad=false;
                     });
                 }
@@ -166,7 +177,9 @@
             next()
         },
         components:{
-            headerTop
+            headerTop,
+            vipAdd,
+            detailVip
         }
     }
 </script>
@@ -229,19 +242,24 @@
         bottom: 0;
         left: 0;
         right:0;
+        .listBox{
+            height: 100%;
+            overflow: auto;
+        }
         .mchntList{
             background: white;
             border-bottom: solid 1px $lineColor;
             height: 1.5rem;
+            line-height: 1.5rem;
             @include sc(0.38rem,$fontColor);
             .link{
                 width: 100%;
                 height: 100%;
                 display: inline-block;
-                padding: 0.45rem;
             }
             .mchntName{
-                width: 60%;
+                width: 55%;
+                padding-left: 0.3rem;
                 .nameicon0{//钻石
                     color: purple;
                 }
@@ -256,11 +274,10 @@
                 }
             }
             .mchntIntergral{
-                width: 40%;
+                width: 45%;
+                padding-left: 0.5rem;
                 .intergralicon{
-                    display: inline-block;
                     vertical-align: middle;
-                    height: 0.5rem;
                 }
                 .intergralicon0{//钻石
                     color: purple;

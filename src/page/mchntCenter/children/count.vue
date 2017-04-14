@@ -15,32 +15,28 @@
                     </div>
                 </div>
                 <div class="detailCount">
-                    <ul class="listBox">
-                        <li class="countList">
-                            总销售：<span class="value">{{actualAmount}}</span>
-                        </li>
-                        <li class="countList">
-                            销售总笔数：<span class="value">{{transNumber}}</span>
-                        </li>
-                        <li class="countList">
-                            本行卡消费金额：<span class="value">{{bcAmount}}</span>
-                        </li>
-                        <li class="countList">
-                            它行卡消费金额：<span class="value">{{obcAmount}}</span>
-                        </li>
-                        <li class="countList">
-                            借记卡消费金额：<span class="value">{{debitAmount}}</span>
-                        </li>
-                        <li class="countList">
-                            贷记卡消费金额：<span class="value">{{crebitAmount}}</span>
-                        </li>
-                        <li class="countList">
-                            活动补贴金额：<span class="value">{{activityAmount}}</span>
-                        </li>
-                        <li class="countList">
-                            手续费汇总金额：<span class="value">{{handlingChargeCount}}</span>
-                        </li>
-                    </ul>
+                    <div class="clear valueBox">
+                        <div class="left key">
+                            <p>总销售：</p>
+                            <p>销售总笔数：</p>
+                            <p>本行卡消费金额：</p>
+                            <p>它行卡消费金额：</p>
+                            <p>借记卡消费金额：</p>
+                            <p>贷记卡消费金额：</p>
+                            <p>活动补贴金额：</p>
+                            <p>手续费汇总金额：</p>
+                        </div>
+                        <div class="left value">
+                            <p>{{actualAmount | fmoney}}</p>
+                            <p>{{transNumber}}</p>
+                            <p>{{bcAmount | fmoney}}</p>
+                            <p>{{obcAmount | fmoney}}</p>
+                            <p>{{debitAmount | fmoney}}</p>
+                            <p>{{crebitAmount | fmoney}}</p>
+                            <p>{{activityAmount | fmoney}}</p>
+                            <p>{{handlingChargeCount | fmoney}}</p>
+                        </div>
+                    </div>   
                 </div>
             </div>
     </div>
@@ -48,7 +44,7 @@
 <script>
     import Vue from 'vue'
     import headerTop from '@/components/header'
-    import {getData,getMonth} from '@/config/utils'
+    import {getData,getMonth,moneyformat} from '@/config/utils'
     import { Toast ,Indicator} from 'mint-ui';
     export default {
         data(){
@@ -66,9 +62,14 @@
                 dateNow:''
             }
         },
+        filters:{
+            fmoney:function(value){
+                return moneyformat(value)
+            }
+        },
         created(){
             this.dateNow=getMonth()
-            getData(this,{"transMonth":getMonth().split('-').join('')},'/mss/api/countMonthFlw.do',(data)=>{
+                getData(this,{"transMonth":getMonth().split('-').join('')},'/mss/api/countMonthFlw.do',(data)=>{
                 for(var attr in data.data.data){
                     this[attr]=data.data.data[attr]
                 }
@@ -159,15 +160,24 @@
         overflow: auto;
         border-top: solid 1px $lineColor;
         padding-bottom: 1.45rem;
-        .listBox{
+        .valueBox{
             background: white;
-            .countList{
-                height: 1.2rem;
-                border-bottom: solid 1px $lineColor;
-                line-height: 1.2rem;
-                padding-left: 0.95rem;
-                @include sc(0.38rem,$fontColor);
-            }
+            @include sc(0.35rem,$fontColor)
+        }
+        .key{
+            text-align: right;
+            width: 40%;
+            line-height: 1rem;
+        }
+        .value{
+            text-align: left;
+            width: 60%;
+            line-height: 1rem;
+            
+        }
+        p{
+            border-bottom: solid 1px #cfcfcf;
+            padding-left: 0.1rem;
         }
     }
 </style>

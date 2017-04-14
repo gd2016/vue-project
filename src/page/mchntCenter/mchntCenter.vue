@@ -40,7 +40,7 @@
                             <td>营业执照号码：</td><td>{{licNo}}</td>
                         </tr>
                         <tr>
-                            <td>注册资本：</td><td>1000万</td>
+                            <td>经营名称：</td><td>{{mchntCnAbbr}}</td>
                         </tr>
                         <tr>
                             <td>法人代表：</td><td>{{artifNm}}</td>
@@ -48,15 +48,12 @@
                         <tr>
                             <td>结算账户账号：</td><td>{{settleNoEncry}}</td>
                         </tr>
-                        <tr>
-                            <td>绑定设备：</td><td>杭州店</td>
-                        </tr>
                     </table>
                 </div>
             </section>
         </div>
         <footer-bottom></footer-bottom>
-        <router-view></router-view>
+        <keep-alive><router-view></router-view></keep-alive>
     </div>
 </template>
 <script>

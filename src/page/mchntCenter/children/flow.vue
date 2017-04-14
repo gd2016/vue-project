@@ -98,8 +98,7 @@
                 </section>
             </div>
         </div>
-        <router-view :info="detailInfo">
-
+        <router-view>
         </router-view>
     </div>
 </template>

@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
 import routes from './router'
+import store from './store/'
 import FastClick from 'fastclick'
 import './config/rem'
 Vue.config.productionTip = false
@@ -26,6 +27,7 @@ const router=new VueRouter({
 new Vue({
   el:"#app",
   router,
-   template: '<App/>',
+  store,
+  template: '<App/>',
   components: { App }
 })

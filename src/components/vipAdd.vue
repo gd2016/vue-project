@@ -1,6 +1,6 @@
 <template>
         <div class="childPage">
-            <header-top headtitle="会员添加" goback="true"></header-top>
+            <header-top headtitle="会员添加" ></header-top>
             <div class="content">
                 <mt-field v-model="vipName" label="姓名" placeholder="请输入会员姓名"></mt-field>
                 <mt-field v-model="mobileNo" label="手机号" placeholder="请输入会员手机号"></mt-field>
@@ -16,7 +16,7 @@
                 </a>
                 <div class="buttons">
                     <mt-button class="btn" @click="vipAdd()" size="normal" type="danger">确定</mt-button>
-                    <mt-button class="btn" @click="$router.go(-1)" size="normal" type="danger">取消</mt-button>
+                    <mt-button class="btn" @click="VIP_ADD_CANCEL()" size="normal" type="danger">取消</mt-button>
                 </div>
                 <div :class="{hide:popupVisibel==false}" class="levelSelectBox" @click="popupVisibel=false">
                     <mt-popup  v-model="popupVisibel"  position="bottom">
@@ -29,6 +29,7 @@
 <script>
     import Vue from 'vue'
     import headerTop from '@/components/header'
+    import {mapMutations,mapState} from 'vuex'
     import { Field,Popup,Picker,Toast} from 'mint-ui'
     import {getData} from '@/config/utils'
     Vue.component(Field.name, Field)
@@ -38,6 +39,7 @@
         data(){
             return {
                 popupVisibel:false,
+                isShow:'',
                 vipName:'',
                 level:'',
                 initlevel:'',
@@ -48,6 +50,9 @@
             }
         },
         methods:{
+            ...mapMutations([
+                'VIP_ADD_CANCEL'
+            ]),
             selectLevel(){
                 this.popupVisibel=true;
                 this.initlevel=true
@@ -70,11 +75,16 @@
                         position: 'bottom',
                         duration: 1500
                     });
-                    this.$router.go(-1)
+                    this.VIP_ADD_CANCEL();
+                    this.level="";this.vipName="";this.mobileNo=""
+                    this.$emit('confirm',true);
                 })
             }
         },
         computed:{
+            ...mapState([
+                'vipAddShow'
+            ]),
             levelformat(){
                 if(this.level=="白银"){
                     return "3"
@@ -93,6 +103,16 @@
     }
 </script>
 <style scoped lang="scss">
-@import '../../../style/mixin.scss';
-    
+@import '../style/mixin';
+    .levelSelectBox,.mint-popup-bottom{
+        width: 100%;
+    }
+    .btn{
+        background: $bgColor;
+        height: 1rem;
+        @include sc(0.38rem,white);
+        margin-top: 1rem;
+        width: 35%;
+        margin-left: 1rem;
+    }
 </style>

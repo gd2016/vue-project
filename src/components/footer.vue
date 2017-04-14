@@ -27,7 +27,7 @@ export default {
         width: 100%;
         height: 1.45rem;
         line-height: 1.45rem;
-        z-index: 9999;
+        z-index: 10;
         left: 0;
         background: none;
         .footul{

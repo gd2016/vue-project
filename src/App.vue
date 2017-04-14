@@ -1,12 +1,14 @@
 <template>
   <div id="app">
+    <keep-alive>
       <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
 export default {
- 
+  
 }
 </script>
 
@@ -76,10 +78,10 @@ export default {
         }
     }
   .mint-indicator-mask{
-    z-index: 8888;
+    z-index: 100;
   }
   .mint-indicator-wrapper{
-    z-index: 5;
+    z-index: 100;
   }
   .spinner{
     height: 1rem;

@@ -2,6 +2,7 @@
     <header class="header">
         <div class="header-container clear">
             <span v-if="goback" @click="$router.go(-1)" class="back iconfont icon-houtui"></span>
+            <span v-if="closed" @click="closePage()" class="back iconfont icon-houtui"></span>
             <span class="title" >{{headtitle}}</span>
             <router-link v-if="right"  :to="{path: '/settings'}" tag="span" class="more iconfont icon-ordinaryset">
             </router-link>
@@ -9,13 +10,22 @@
     </header>
 </template>
 <script>
+    import {mapMutations} from 'vuex'
     export default {
         data(){
             return {
                 
             }
         },
-        props:['headtitle','goback','right']
+        methods:{
+            ...mapMutations([
+                'VIP_DETAIL_CANCEL'
+            ]),
+            closePage(){
+                this.VIP_DETAIL_CANCEL()
+            }
+        },
+        props:['headtitle','goback','right','closed']
     }
 </script>
 <style lang="scss" scoped>
