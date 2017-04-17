@@ -333,7 +333,7 @@
         .mint-field{
             .mint-cell-wrapper{
                 .mint-cell-value{
-                    padding-right: 1rem;
+                    // padding-right: 1rem;
                 }
             }
 

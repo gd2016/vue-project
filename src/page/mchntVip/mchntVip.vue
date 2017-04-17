@@ -21,8 +21,9 @@
                 <!--</router-link>-->
             </div>
             <div class="mchntModule" id="vipList">
-                <ul class="listBox" ref="scrollList" @scroll="scorllHandle($event)">
-                    <li @click="getDetail(item)" class="mchntList clear" v-for="(item,index) in vipList">
+                <ul class="listBox" ref="scrollList">
+                    <transition-group name="listTrans" mode="out-in">
+                    <li @click="getDetail(item)" class="mchntList clear" v-for="(item,index) in vipList" :key="index">
                         <!--<router-link class="link" :to="{path:'/mchntVip/detailVip',query:{vipName:item.vipName,mobileNo:item.mobileNo,createDatetime:item.createDatetime,integral:item.integral,level:item.vipLevel,vipId:item.vipId}}">-->
                         <div class="left mchntName ellipsis">
                             <span :class="{nameicon0:item.vipLevel=='0',nameicon1:item.vipLevel=='1',nameicon2:item.vipLevel=='2',nameicon3:item.vipLevel=='3'}" class="iconfont icon-yonghuming"></span>
@@ -34,12 +35,17 @@
                         </div>
                         <!--</router-link>-->
                     </li>
+                    </transition-group>
                     <mt-spinner v-show="loadMore" class="spinner"  :type="3"></mt-spinner>
                 </ul>
             </div>
         </div>
-        <vip-add v-show="vipAddShow" v-on:confirm="reloadData"></vip-add>
-        <detail-vip info="detailInfo" v-on:confirm="reloadData" v-if="vipDetailShow"></detail-vip>
+        <transition name="left-in" mode="out-in">
+            <vip-add v-show="vipAddShow" v-on:confirm="reloadData"></vip-add>
+        </transition>
+        <transition name="left-in" mode="out-in">
+            <detail-vip info="detailInfo" v-on:confirm="reloadData" v-if="vipDetailShow"></detail-vip>
+        </transition>
         <!--<keep-alive>
         <router-view ></router-view>
         </keep-alive>-->
@@ -95,11 +101,6 @@
                 this.detailInfo=item;
                 this.VIP_DETAIL_SHOW(item)
             },
-            scorllHandle(e){
-                if(e.target.scrollTop+e.target.offsetHeight>=e.target.scrollHeight){
-                    this.loadData() 
-                }
-            },
             initdata(){
                 Indicator.open('正在加载...')
                 getData(this,'','/mss/api/countVipAndIntegral.do',(data)=>{
@@ -112,11 +113,20 @@
                 }
                 getData(this,data,'/mss/api/findVip.do',(data)=>{
                     if(data.data.data.length<10){
-                        console.log('xiaoyu')
                         this.loadMore=false
                     }
                     this.vipList=data.data.data;
                     Indicator.close()
+                    this.$nextTick(()=>{
+                        this.vipScroll=new BScroll('#vipList',{
+                            probeType:3
+                        })
+                        this.vipScroll.on('scroll', (pos) => {
+                            if (Math.abs(Math.round(pos.y)) >=  Math.abs(Math.round(this.vipScroll.maxScrollY))) {
+                               this.loadData()
+                            }
+                        })
+                    })
                 });
             },
             findvip() {
@@ -139,6 +149,9 @@
                             this.loadMore=false
                         }
                         this.vipList=data
+                        this.$nextTick(()=>{
+                            this.vipScroll.refresh();
+                        })
                         this.timer=""
                     });
                 }, 1500);
@@ -159,22 +172,23 @@
                             for (var index = 0; index < data.length; index++) {
                                 this.vipList.push(data[index]);
                             }
+                            this.$nextTick(()=>{
+                                this.vipScroll.refresh();
+                            })
                         }else{
                             for (var index = 0; index < data.length; index++) {
                                 this.vipList.push(data[index]);
                             }
+                            this.$nextTick(()=>{
+                                this.vipScroll.refresh();
+                            })
                             this.loadMore=true;
                         }
+                            
                         this.hasLoad=false;
                     });
                 }
             }
-        },
-        beforeRouteUpdate (to,from,next) {
-            if(from.path=='/mchntVip/detailVip'||from.path=='/mchntVip/addVip'){
-                this.initdata()
-            }
-            next()
         },
         components:{
             headerTop,
@@ -186,6 +200,14 @@
 <style scoped lang="scss">
     
     @import '../../style/mixin.scss';
+    .listTrans-enter-active{
+        transition: all .4s;
+        
+    }
+    .listTrans-enter{
+        opacity: 0;
+        transform: translateX(2rem);
+    }
     .headModule{
         background: $bgColor;
         padding-bottom: 0.4rem;
@@ -243,14 +265,13 @@
         left: 0;
         right:0;
         .listBox{
-            height: 100%;
-            overflow: auto;
+            // height: 100%;
+            // overflow: auto;
         }
         .mchntList{
             background: white;
             border-bottom: solid 1px $lineColor;
             height: 1.5rem;
-            line-height: 1.5rem;
             @include sc(0.38rem,$fontColor);
             .link{
                 width: 100%;
@@ -260,6 +281,7 @@
             .mchntName{
                 width: 55%;
                 padding-left: 0.3rem;
+                margin-top: 0.5rem;
                 .nameicon0{//钻石
                     color: purple;
                 }
@@ -276,6 +298,7 @@
             .mchntIntergral{
                 width: 45%;
                 padding-left: 0.5rem;
+                margin-top: 0.5rem;
                 .intergralicon{
                     vertical-align: middle;
                 }

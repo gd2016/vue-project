@@ -10,8 +10,6 @@ const count = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/
 
 const detailFlow = r =>require.ensure([],()=>r(require('../page/mchntCenter/children/detailFlow')),'detailFlow')
 const mchntVip = r =>require.ensure([],()=>r(require('../page/mchntVip/mchntVip')),'mchntVip')
-const addVip = r =>require.ensure([],()=>r(require('../page/mchntVip/children/vipAdd')),'addVip')
-const detailVip = r =>require.ensure([],()=>r(require('../page/mchntVip/children/detailVip')),'detailVip')
 const settings = r =>require.ensure([],()=>r(require('../page/settings/settings')),'settings')
 const changePwd = r =>require.ensure([],()=>r(require('../page/settings/children/changePwd')),'changePwd')
 const sign = r =>require.ensure([],()=>r(require('../page/sign/sign')),'sign')
@@ -54,14 +52,7 @@ export default [
       }]
     },{
       path:'/mchntVip',
-      component:mchntVip,
-      children:[{
-        path:'addVip',
-        component:addVip,
-      },{
-        path:'detailVip',
-        component:detailVip,
-      }]
+      component:mchntVip
     },{
       path:'/settings',
       component:settings,

@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+    <transition name="left-in" mode="out-in">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
@@ -41,7 +43,7 @@ export default {
         padding-left:  1rem;
       }
       .mint-cell-value{
-        padding-right: 1rem;
+        // padding-right: 1rem;
         .mint-field-core{
           height: 1rem;
         }
@@ -93,15 +95,22 @@ export default {
         transform: translate(-14px,-14px);
     }
     .detailInfo{
-            .mint-cell{
-                .mint-cell-wrapper{
-                    span{
-                        font-size: 0.35rem;
-                    }
-                    .mint-cell-value{
-                      font-size: 0.35rem;
-                    }
-                }
-            }
-        }
+      .mint-cell{
+          .mint-cell-wrapper{
+              span{
+                  font-size: 0.35rem;
+              }
+              .mint-cell-value{
+                font-size: 0.35rem;
+              }
+          }
+      }
+    }
+.left-in-enter-active,.left-in-leave-active{
+    transition: all .3s;
+}
+.left-in-enter,.left-in-leave-active{
+    transform: translateX(1rem);
+    opacity: 0;
+}
 </style>

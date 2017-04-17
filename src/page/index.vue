@@ -106,6 +106,14 @@
 </script>
 <style scoped lang="scss">
  @import '../style/mixin.scss';
+
+  .router-fade-enter-active, .router-fade-leave-active {
+	  	transition: opacity .3s;
+	}
+	.router-fade-enter, .router-fade-leave-active {
+	  	opacity: 0;
+	}
+
     .swiper{
         height: 5rem;
         img{

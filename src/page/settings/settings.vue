@@ -30,7 +30,9 @@
                 </li>
             </ul>
         </div>
-        <router-view></router-view>
+        <transition name="left-in" mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 <script>
@@ -58,6 +60,7 @@
                 .then((Response) => {
                     removeStore('sessionId');
                     this.$router.push({path:'login'})
+                    this.$router.go(0)
                 })
             }
         }
@@ -66,6 +69,7 @@
 </script>
 <style scoped lang="scss">
 @import '../../style/mixin.scss';
+
 .content{
     .listbox{
         background: white;

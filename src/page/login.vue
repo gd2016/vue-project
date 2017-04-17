@@ -24,8 +24,8 @@
                     <span class="cue">5天内记住账号</span>
                 </div>
                 <div class="right">
-                    <router-link :to="{path: '/register'}" tag="span">注册</router-link>
-                    <div class="line"></div>
+                    <router-link class="line" :to="{path: '/register'}" tag="span">注册</router-link>
+                    <!--<div class="line"></div>-->
                     <router-link :to="{path: '/findpwd'}" tag="span">忘记密码？</router-link>
                 </div>
             </section>
@@ -132,14 +132,14 @@
                 padding-left: 0.3rem;
             }
             .userName{
-                border-bottom:solid 0.01rem $lineColor;
+                border-bottom:solid 1px $lineColor;
                 padding-left:0.3rem;
                 .iconname{
                     @include sc(0.55rem,$bgColor)
                 }
             }
             .userPwd{
-                border-bottom:solid 0.01rem $lineColor;
+                border-bottom:solid 1px $lineColor;
                 padding-left:0.3rem;
                 margin-top: 0.3rem;
                 .iconpwd{
@@ -158,10 +158,12 @@
                 margin:0 0.1rem;
             }
             .line{
-                display: inline-block;
-                background: $bgColor;
-                height: 0.3rem;
-                width: 0.035rem;
+                // display: inline-block;
+                // background: $bgColor;
+                // height: 0.3rem;
+                // width: 0.035rem;
+                padding-right: 0.3rem;
+                border-right: solid 1px $bgColor;
             }
             .checkbox{
                 @include sc(0.5rem,$bgColor);
