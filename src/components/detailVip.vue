@@ -91,7 +91,7 @@
                 })
             },
             vipDelete(){
-                MessageBox.confirm('确定执行此操作?').then(action => {
+                MessageBox.confirm('确定删除此会员?').then(action => {
                     var data={
                         "vipId":this.vipInfo.vipId
                     }
