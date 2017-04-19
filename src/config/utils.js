@@ -118,3 +118,7 @@ export const moneyformat = (value) => {
     } 
     return "￥"+ t.split("").reverse().join("") + "." + r; 
 }
+
+export const dateformat = (value) => {
+    return value.substring(0,4)+"-"+value.substring(4,6)+"-"+value.substring(6,8)+" "+value.substring(8,10)+":"+value.substring(10,12)
+}

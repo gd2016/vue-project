@@ -119,7 +119,8 @@
                     Indicator.close()
                     this.$nextTick(()=>{
                         this.vipScroll=new BScroll('#vipList',{
-                            probeType:3
+                            probeType:3,
+                            click:true
                         })
                         this.vipScroll.on('scroll', (pos) => {
                             if (Math.abs(Math.round(pos.y)) >=  Math.abs(Math.round(this.vipScroll.maxScrollY))) {
@@ -200,14 +201,6 @@
 <style scoped lang="scss">
     
     @import '../../style/mixin.scss';
-    .listTrans-enter-active{
-        transition: all .4s;
-        
-    }
-    .listTrans-enter{
-        opacity: 0;
-        transform: translateX(2rem);
-    }
     .headModule{
         background: $bgColor;
         padding-bottom: 0.4rem;

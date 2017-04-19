@@ -1,5 +1,5 @@
 <template>
-    <div class="childPage footerPage">
+    <div class="childPage">
         <header-top headtitle="月销售统计" goback="true"></header-top>
             <div @click="dateshow=false" class="content"> 
                 <div class="datemodule clear">

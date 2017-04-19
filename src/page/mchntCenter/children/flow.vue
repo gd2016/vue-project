@@ -1,5 +1,5 @@
 <template>
-    <div class="childPage footerPage">
+    <div class="childPage">
         <header-top headtitle="流水查询" goback="true"></header-top>
         <div @click="dateshow=false" class="content">
             <div class="tab">
@@ -11,6 +11,7 @@
             <div class="flowBox">
                 <section class="monthsum" v-show="changeshow=='month'">
                     <ul>
+                        <transition-group name="listTrans" mode="out-in">
                         <li class="list clear"  v-for="(item,index) in thisflowCount" :key="index">
                             <div class="info" @click="getTransFlow(item.transDate,index)">
                                 <span class="date">{{item.transDate}}日</span>
@@ -25,7 +26,7 @@
                                 <mt-spinner class="spinner" v-show="item.loading" :type="3"></mt-spinner>
                                 <ul class="detaillistBox" v-if="item.detail!=''">
                                     <li @click="getDetail(items.serialNo,items.transDatetime)" class="detaillist clear"  v-for="(items,indexs) in item.detail" :key="indexs">
-                                        <section :class='{iconbg1:items.transType=="2022"||items.transType=="2022"||items.transType=="4022"||items.transType=="1022"||items.transType=="3022",iconbg2:items.transType=="4064",iconbg3:items.transType=="4067",iconbg4:items.transType=="4062",iconbg5:items.transType=="3053"||items.transType=="3054"||items.transType=="3025"||items.transType=="1031"}' class="iconBox back_img">
+                                        <section :class='{iconbg1:items.transType=="2022"||items.transType=="4022"||items.transType=="1022"||items.transType=="3022",iconbg2:items.transType=="4064",iconbg3:items.transType=="4067",iconbg4:items.transType=="4062",iconbg5:items.transType=="3053"||items.transType=="3054"||items.transType=="3025"||items.transType=="1031"}' class="iconBox back_img">
                                         </section>
                                         <section class="detailtype">
                                             <p class="font ellipsis">{{items.transTypeName}}</p>
@@ -45,6 +46,7 @@
                             </div>
                             
                         </li>
+                        </transition-group>
                     </ul>
                 </section>
                 <section class="historysum" v-show="changeshow=='history'">
@@ -61,45 +63,48 @@
                         </div>
                     </div>
                     <ul>
-                        <li class="list clear"  v-for="(item,index) in hisflowCount" :key="index">
-                            <div class="info" @click="getHisTransFlow(item.transDate,index)">
-                                <span class="date">{{item.transDate}}日</span>
-                                <div class="amount">
-                                    <p class="transAmount">交易总额：<b class="value">{{item.actualAmount}}</b>元</p>
-                                    <p class="handleAmount">手续费总额：<b class="value">{{item.handlingChargeAmount}}</b>元</p>
+                        <transition-group name="listTrans" mode="out-in">
+                            <li class="list clear"  v-for="(item,index) in hisflowCount" :key="index">
+                                <div class="info" @click="getHisTransFlow(item.transDate,index)">
+                                    <span class="date">{{item.transDate}}日</span>
+                                    <div class="amount">
+                                        <p class="transAmount">交易总额：<b class="value">{{item.actualAmount}}</b>元</p>
+                                        <p class="handleAmount">手续费总额：<b class="value">{{item.handlingChargeAmount}}</b>元</p>
+                                    </div>
+                                    <span :class="{'icon-youjiantou':!item.show,'icon-xiajiantou1':item.show}" class="icons iconfont"></span>
+                                    <span class="middle"></span>
                                 </div>
-                                <span :class="{'icon-youjiantou':!item.show,'icon-xiajiantou1':item.show}" class="icons iconfont"></span>
-                                <span class="middle"></span>
-                            </div>
-                            <div class="detailFlow" v-if="item.show">
-                                <mt-spinner class="spinner" v-show="item.loading" :type="3"></mt-spinner>
-                                <ul class="detaillistBox" v-if="item.detail!=''">
-                                    <li @click="getDetail(items.serialNo,items.transDatetime)" class="detaillist clear"  v-for="(items,indexs) in item.detail" :key="indexs">
-                                        <section :class='{iconbg1:items.transType=="2022"||items.transType=="2022"||items.transType=="4022"||items.transType=="1022"||items.transType=="3022",iconbg2:items.transType=="4064",iconbg3:items.transType=="4067",iconbg4:items.transType=="4062",iconbg5:items.transType=="3053"||items.transType=="3054"||items.transType=="3025"||items.transType=="1031"}' class="iconBox back_img">
-                                            <!--<img src="../../../images/list_icon01.png"/>-->
-                                        </section>
-                                        <section class="detailtype">
-                                            <p class="font ellipsis">{{items.transTypeName}}</p>
-                                            <p class="time">{{items.transDatetime | dateformat}}</p>
-                                        </section>
-                                        <section class="detailstatus">
-                                            <p class="transAmount ellipsis"><span>+{{items.actualAmount}}</span>元</p>
-                                            <p :class="{success:items.transFlag=='1',fail:items.transFlag=='2',handling:items.transFlag=='0',cancel:items.transFlag=='4'}" class="transFlag">{{items.transFlag | flagformat}}</p>
-                                        </section>
-                                        <span class="middle"></span>
-                                    </li>
-                                    <p @click="loadmorehis(item.transDate,index,item.pageNo)" v-show="item.more&&!clicked" class="loadmore">加载更多</p>
-                                    <mt-spinner v-show="item.more&&clicked" class="spinner"  :type="3"></mt-spinner>
-                                </ul>
-                                <p v-else class="loadmore">当前日期无交易</p>
-                            </div>
-                        </li>
+                                <div class="detailFlow" v-if="item.show">
+                                    <mt-spinner class="spinner" v-show="item.loading" :type="3"></mt-spinner>
+                                    <ul class="detaillistBox" v-if="item.detail!=''">
+                                        <li @click="getDetail(items.serialNo,items.transDatetime)" class="detaillist clear"  v-for="(items,indexs) in item.detail" :key="indexs">
+                                            <section :class='{iconbg1:items.transType=="2022"||items.transType=="4022"||items.transType=="1022"||items.transType=="3022",iconbg2:items.transType=="4064",iconbg3:items.transType=="4067",iconbg4:items.transType=="4062",iconbg5:items.transType=="3053"||items.transType=="3054"||items.transType=="3025"||items.transType=="1031"}' class="iconBox back_img">
+                                            </section>
+                                            <section class="detailtype">
+                                                <p class="font ellipsis">{{items.transTypeName}}</p>
+                                                <p class="time">{{items.transDatetime | dateformat}}</p>
+                                            </section>
+                                            <section class="detailstatus">
+                                                <p class="transAmount ellipsis"><span>+{{items.actualAmount}}</span>元</p>
+                                                <p :class="{success:items.transFlag=='1',fail:items.transFlag=='2',handling:items.transFlag=='0',cancel:items.transFlag=='4'}" class="transFlag">{{items.transFlag | flagformat}}</p>
+                                            </section>
+                                            <span class="middle"></span>
+                                        </li>
+                                        <p @click="loadmorehis(item.transDate,index,item.pageNo)" v-show="item.more&&!clicked" class="loadmore">加载更多</p>
+                                        <mt-spinner v-show="item.more&&clicked" class="spinner"  :type="3"></mt-spinner>
+                                    </ul>
+                                    <p v-else class="loadmore">当前日期无交易</p>
+                                </div>
+                            </li>
+                        </transition-group>
                     </ul>
                 </section>
             </div>
         </div>
-        <router-view>
-        </router-view>
+        <transition name="left-in" mode="out-in">
+            <router-view>
+            </router-view>
+        </transition>
     </div>
 </template>
 <script>
@@ -220,7 +225,7 @@
                 }
             },
             getDetail(serialNo,date){
-                this.$router.push({path:'detailFlow',query:{serialNo:serialNo,transDatetime:date.substring(0,8)}})
+                this.$router.push({path:'flow/detailFlow',query:{serialNo:serialNo,transDatetime:date.substring(0,8)}})
             },
             select(e){
                 this.dateNow=e.target.innerText;

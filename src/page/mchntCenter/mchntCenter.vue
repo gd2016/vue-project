@@ -34,7 +34,7 @@
                         </tr>
                         <tr>
                             <td>申请日期：</td>
-                            <td>{{registerDatetime}}</td>
+                            <td>{{datefomat}}</td>
                         </tr>
                         <tr>
                             <td>营业执照号码：</td><td>{{licNo}}</td>
@@ -62,7 +62,7 @@
     import Vue from 'vue'
     import headerTop from '../../components/header'
     import footerBottom from '../../components/footer'
-    import {getData} from '@/config/utils'
+    import {getData,dateformat} from '@/config/utils'
     export default {
         data(){
             return {
@@ -75,6 +75,11 @@
                 mchntCnNm:'',
                 registerDatetime:'',
                 settleNoEncry:''
+            }
+        },
+        computed:{
+            datefomat(){
+                return dateformat(this.registerDatetime)
             }
         },
         created(){

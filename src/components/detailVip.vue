@@ -36,7 +36,7 @@
     import {mapMutations,mapState} from 'vuex'
     import headerTop from '@/components/header'
     import { Field,Popup,Picker,Toast,MessageBox } from 'mint-ui'
-    import {getData} from '@/config/utils'
+    import {getData,dateformat} from '@/config/utils'
     Vue.component(Field.name, Field)
     Vue.component(Popup.name, Popup);
     Vue.component(Picker.name, Picker);
@@ -112,7 +112,7 @@
                 'vipInfo'
             ]),
             datefomat:function(){
-                return this.vipInfo.createDatetime.substring(0,4)+"-"+this.vipInfo.createDatetime.substring(4,6)+"-"+this.vipInfo.createDatetime.substring(6,8)+" "+this.vipInfo.createDatetime.substring(8,10)+":"+this.vipInfo.createDatetime.substring(10,12)
+                return dateformat(this.vipInfo.createDatetime)
             },
             levelformat(){
                 if(this.vipInfo.vipLevel=="3"){

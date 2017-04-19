@@ -29,6 +29,16 @@ export default {
       padding-top: 1.6rem;
       height: 100%;   
   }
+  .childPage{
+    position: absolute;
+    top: 0;
+    left:0;
+    right: 0;
+    height: 100%;
+    background: #f6f6f6;
+    padding-top: 1.6rem;
+    z-index: 3
+  }
   .content{
       height: 100%;
       overflow: auto;
@@ -112,5 +122,12 @@ export default {
 .left-in-enter,.left-in-leave-active{
     transform: translateX(1rem);
     opacity: 0;
+}
+.listTrans-enter-active{
+    transition: all .4s;
+}
+.listTrans-enter{
+    opacity: 0;
+    transform: translateX(2rem);
 }
 </style>
