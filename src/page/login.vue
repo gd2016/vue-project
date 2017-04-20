@@ -12,7 +12,7 @@
                 </div>
                 <div class="userPwd">
                     <span class="iconpwd iconfont icon-mima"></span>
-                    <input type="password" placeholder="请输入密码"  v-model="loginPwd" />
+                    <input @keyup.enter="login()" type="password" placeholder="请输入密码"  v-model="loginPwd" />
                 </div>
             </section>
             <section class="login">
@@ -78,8 +78,6 @@
                     mobileNo:this.mobileNo,
                     loginPwd:this.loginPwd
                 })
-                // var params=new URLSearchParams();
-                // params.append('json', '{data:{mobileNo:'+this.mobileNo+',loginPwd:'+this.loginPwd+'}}');
                 axios ({
                     method:'post',
                     data:params,
@@ -88,12 +86,12 @@
                 .then((response) => {
                     
                     if(response.data.returnCode!=="1"){
-                        
                         Toast({
                             message: response.data.errMessage,
                             position: 'bottom',
                             duration: 1000
                         });
+                        this.loginPwd=""
                     }else{
                         
                         if(this.remember){

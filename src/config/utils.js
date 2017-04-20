@@ -1,5 +1,6 @@
 import {  Toast ,Indicator} from 'mint-ui'
 import axios from 'axios'
+import qs from 'qs'
 /**
  * 存储localStorage
  */
@@ -54,7 +55,10 @@ export const getData = (_this,para,url,call) => {
     axios ({
         method:'post',
         data:params,
-        url:url
+        url:url,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
     })
     .then((response) => {
         if(errorhandle(response,_this)){
@@ -63,10 +67,8 @@ export const getData = (_this,para,url,call) => {
     })
 }
 
-export const setparams = par => {
-    
-    var params=new FormData();
-    params.append('json', '{sessionId:"'+getStore('sessionId')+'",data:'+JSON.stringify(par)+'}');
+export const setparams = par => {//  axios 需要qs来让请求数据序列化
+    var params=qs.stringify({'json': '{sessionId:"'+getStore('sessionId')+'",data:'+JSON.stringify(par)+'}'});
     return params
 }
 

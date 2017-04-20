@@ -246,7 +246,14 @@
                 })
             },
             confirm(){
-                
+                if(!this.checkForm()){
+                    Toast({
+                        message: '信息不能为空',
+                        position: 'bottom',
+                        duration: 1500
+                    });
+                    return 
+                }
                 if (navigator.geolocation){
                     navigator.geolocation.getCurrentPosition(this.getPosition,this.errorhandle,{
                         timeout:20000,
@@ -280,6 +287,13 @@
                     });
                     this.$router.go(-1)
                 })
+            },
+            checkForm(){
+                if(this.mobileNo==""||this.certifId==""||this.applyName==""||this.address==""||this.area==""||this.bank==""){
+                    return false
+                }else{
+                    return true
+                }
             },
             errorhandle(error){
                 Indicator.close()
